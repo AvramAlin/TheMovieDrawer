@@ -67,7 +67,7 @@ function ProfileStackScreen() {
 export default function App() {
   return (
     <>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
       <NavigationContainer>
         <BottomTab.Navigator
           screenOptions={{
