@@ -1,8 +1,7 @@
 // api/tmdb.js
 import axios from "axios";
 
-const API_KEY = "8204289791bd9f18787e35307c9e8c8c";
-const BASE_URL = "https://api.themoviedb.org/3";
+import { BASE_URL, API_KEY } from "../keys";
 
 export const getPopularMovies = async (page = 1) => {
   try {
