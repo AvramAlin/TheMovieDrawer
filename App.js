@@ -4,19 +4,21 @@ import { StyleSheet, Text, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
-import HomeScreen from "./screens/HomeScreen/HomeScreen";
 import ListsScreen from "./screens/ListsScreen/ListsScreen";
-import MoviesScreen from "./screens/MoviesScreen/MoviesScreen";
 import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { GlobalStyles } from "./assets/colors/GlobalStyles";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import FinishedList from "./screens/MoviesScreen/FinishedList";
-import WatchingList from "./screens/MoviesScreen/WatchingList";
 import OnHoldList from "./screens/MoviesScreen/OnHoldList";
 import DroppedList from "./screens/MoviesScreen/DroppedList";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import PlanToWatchList from "./screens/MoviesScreen/PlantToWatchList";
+import PopularMoviesScreen from "./screens/HomeScreen/PopularMoviesScreen";
+import TopRatedMoviesScreen from "./screens/HomeScreen/TopRatedMoviesScreen";
+import NowPlayingMoviesScreen from "./screens/HomeScreen/NowPlayingMoviesScreen";
+import MovieDetailsScreen from "./screens/MovieDetailsScreen";
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -30,18 +32,106 @@ function HomeStackScreen() {
     <HomeStack.Navigator>
       <HomeStack.Screen
         name="HomeStack"
-        component={HomeScreen}
+        component={HomeTopTabScreen}
         options={{ headerShown: false }}
+      />
+      <HomeStack.Screen
+        name="MovieDetailsHome"
+        component={MovieDetailsScreen}
+        options={{
+          headerShown: false,
+          presentation: "modal",
+        }}
       />
     </HomeStack.Navigator>
   );
 }
 
+function HomeTopTabScreen() {
+  return (
+    <TopTab.Navigator
+      screenOptions={{
+        tabBarScrollEnabled: true,
+        tabBarStyle: {
+          backgroundColor: GlobalStyles.colors.primary500,
+          elevation: 2, // Remove shadow on Android
+          shadowOpacity: 0.5, // Remove shadow on iOS
+          borderBottomWidth: 0,
+          paddingVertical: 4,
+        },
+        tabBarIndicatorStyle: {
+          backgroundColor: GlobalStyles.colors.accent500,
+          height: 3,
+          borderRadius: 3,
+          marginBottom: 5,
+        },
+        tabBarLabelStyle: {
+          textTransform: "none", // Removes all caps
+          fontFamily: "dmsans-bold",
+          fontSize: 14,
+        },
+        tabBarItemStyle: {
+          width: "auto",
+          paddingHorizontal: 12,
+        },
+        tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        tabBarInactiveTintColor: GlobalStyles.colors.text500,
+        tabBarPressColor: GlobalStyles.colors.primary600, // R
+      }}
+    >
+      <TopTab.Screen
+        name="PopularMovies"
+        component={PopularMoviesScreen}
+        options={{ title: "Popular" }}
+      />
+      <TopTab.Screen
+        name="TopRatedMovies"
+        component={TopRatedMoviesScreen}
+        options={{ title: "Top Rated" }}
+      />
+      <TopTab.Screen
+        name="NowPlayingMovies"
+        component={NowPlayingMoviesScreen}
+        options={{ title: "Now Playing" }}
+      />
+    </TopTab.Navigator>
+  );
+}
+
 function MoviesTopTabScreen() {
   return (
-    <TopTab.Navigator>
+    <TopTab.Navigator
+      screenOptions={{
+        tabBarScrollEnabled: true,
+        tabBarStyle: {
+          backgroundColor: GlobalStyles.colors.primary500,
+          elevation: 2, // Remove shadow on Android
+          shadowOpacity: 0.5, // Remove shadow on iOS
+          borderBottomWidth: 0,
+          paddingVertical: 4,
+        },
+        tabBarIndicatorStyle: {
+          backgroundColor: GlobalStyles.colors.accent500,
+          height: 3,
+          borderRadius: 3,
+          marginBottom: 5,
+        },
+        tabBarLabelStyle: {
+          textTransform: "none", // Removes all caps
+          fontFamily: "dmsans-bold",
+          fontSize: 14,
+        },
+        tabBarItemStyle: {
+          width: "auto",
+          paddingHorizontal: 12,
+        },
+        tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        tabBarInactiveTintColor: GlobalStyles.colors.text500,
+        tabBarPressColor: GlobalStyles.colors.primary600, // R
+      }}
+    >
       <TopTab.Screen name="Finished" component={FinishedList} />
-      <TopTab.Screen name="Watching" component={WatchingList} />
+      <TopTab.Screen name="Plan To Watch" component={PlanToWatchList} />
       <TopTab.Screen name="On Hold" component={OnHoldList} />
       <TopTab.Screen name="Dropped" component={DroppedList} />
     </TopTab.Navigator>
@@ -55,6 +145,14 @@ function MoviesStackScreen() {
         name="MoviesStack"
         component={MoviesTopTabScreen}
         options={{ headerShown: false }}
+      />
+      <MoviesStack.Screen
+        name="MovieDetailsMovies"
+        component={MovieDetailsScreen}
+        options={{
+          headerShown: false,
+          presentation: "modal",
+        }}
       />
     </MoviesStack.Navigator>
   );
@@ -112,6 +210,8 @@ export default function App() {
             tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
             tabBarActiveTintColor: GlobalStyles.colors.accent500,
             tabBarLabelStyle: { fontFamily: "dmsans-light" },
+            headerTitleStyle: { fontFamily: "dmsans-bold", fontSize: 24 },
+            headerTitle: "TheMovieDrawer",
           }}
         >
           <BottomTab.Screen

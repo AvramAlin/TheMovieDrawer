@@ -5,21 +5,24 @@ import MovieListItem from "../../components/MovieListItem";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import MovieList from "../../components/MovieList";
 
-export default function FinishedList() {
-  const [finishedMovies, setFinishedMovies] = useState([]);
+function renderMoviesFunction({ item }) {
+  return <MovieListItem movie={item} />;
+}
+export default function PlanToWatchList() {
+  const [planToWatchMovies, setPlanToWatchMovies] = useState([]);
   useEffect(() => {
     async function fetchFinishedMovies() {
       try {
         const data = await getPopularMovies(1);
-        setFinishedMovies((prevMovies) => [...prevMovies, ...data]);
+        setPlanToWatchMovies((prevMovies) => [...prevMovies, ...data]);
       } catch (err) {
         console.error(err);
       }
     }
     fetchFinishedMovies();
-  }, [setFinishedMovies]);
+  }, [setPlanToWatchMovies]);
 
-  return <MovieList movieData={finishedMovies} />;
+  return <MovieList movieData={planToWatchMovies} />;
 }
 
 const styles = StyleSheet.create({});

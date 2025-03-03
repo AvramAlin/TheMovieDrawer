@@ -1,14 +1,37 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Pressable,
+} from "react-native";
 import React from "react";
 import { GlobalStyles } from "../assets/colors/GlobalStyles";
+import { useNavigation } from "@react-navigation/native";
 
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-export default function MovieItem({ posterPath, title, rating }) {
+export default function MovieItem({ posterPath, title, rating, id }) {
   const formattedRating = rating ? rating.toFixed(1) : "N/A";
+  const navigation = useNavigation();
+
+  function handleNavigateMovieDetails() {
+    navigation.navigate("MovieDetailsHome", {
+      movieId: id,
+    });
+  }
 
   return (
-    <TouchableOpacity style={styles.movieContainer} activeOpacity={0.6}>
+    <Pressable
+      android_ripple={2}
+      style={({ pressed }) =>
+        pressed
+          ? [styles.movieContainer, styles.pressed]
+          : styles.movieContainer
+      }
+      onPress={handleNavigateMovieDetails}
+    >
       <View style={styles.posterContainer}>
         <Image
           style={styles.posterImage}
@@ -23,7 +46,7 @@ export default function MovieItem({ posterPath, title, rating }) {
       <Text style={styles.movieTitle} numberOfLines={2} ellipsizeMode="tail">
         {title}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
@@ -70,5 +93,8 @@ const styles = StyleSheet.create({
     color: "#f3eacf",
     fontFamily: "dmsans-bold",
     fontSize: 15,
+  },
+  pressed: {
+    opacity: 0.8,
   },
 });
