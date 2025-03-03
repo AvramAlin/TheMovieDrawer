@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.colors.background500,
   },
   header: {
-    backgroundColor: GlobalStyles.colors.primary800,
+    backgroundColor: GlobalStyles.colors.primary700,
     paddingTop: 16,
     paddingBottom: 16,
     paddingHorizontal: 16,
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: "dmsans-bold",
     color: GlobalStyles.colors.text500,
     textAlign: "left",
   },

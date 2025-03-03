@@ -1,4 +1,5 @@
 import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -9,12 +10,20 @@ import MoviesScreen from "./screens/MoviesScreen/MoviesScreen";
 import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { GlobalStyles } from "./assets/colors/GlobalStyles";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import FinishedList from "./screens/MoviesScreen/FinishedList";
+import WatchingList from "./screens/MoviesScreen/WatchingList";
+import OnHoldList from "./screens/MoviesScreen/OnHoldList";
+import DroppedList from "./screens/MoviesScreen/DroppedList";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
 const ListsStack = createNativeStackNavigator();
 const MoviesStack = createNativeStackNavigator();
 const ProfileStack = createNativeStackNavigator();
+const TopTab = createMaterialTopTabNavigator();
 
 function HomeStackScreen() {
   return (
@@ -28,12 +37,23 @@ function HomeStackScreen() {
   );
 }
 
+function MoviesTopTabScreen() {
+  return (
+    <TopTab.Navigator>
+      <TopTab.Screen name="Finished" component={FinishedList} />
+      <TopTab.Screen name="Watching" component={WatchingList} />
+      <TopTab.Screen name="On Hold" component={OnHoldList} />
+      <TopTab.Screen name="Dropped" component={DroppedList} />
+    </TopTab.Navigator>
+  );
+}
+
 function MoviesStackScreen() {
   return (
     <MoviesStack.Navigator>
       <MoviesStack.Screen
         name="MoviesStack"
-        component={MoviesScreen}
+        component={MoviesTopTabScreen}
         options={{ headerShown: false }}
       />
     </MoviesStack.Navigator>
@@ -64,7 +84,23 @@ function ProfileStackScreen() {
   );
 }
 
+SplashScreen.preventAutoHideAsync();
 export default function App() {
+  const [fontsLoaded, error] = useFonts({
+    "dmsans-light": require("./assets/fonts/DMSans-Light.ttf"),
+    "dmsans-bold": require("./assets/fonts/DMSans-Bold.ttf"),
+  });
+
+  useEffect(() => {
+    if (fontsLoaded || error) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, error]);
+
+  if (!fontsLoaded && !error) {
+    return null;
+  }
+
   return (
     <>
       <StatusBar style="light" />
@@ -75,6 +111,7 @@ export default function App() {
             headerTintColor: GlobalStyles.colors.text500,
             tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
             tabBarActiveTintColor: GlobalStyles.colors.accent500,
+            tabBarLabelStyle: { fontFamily: "dmsans-light" },
           }}
         >
           <BottomTab.Screen

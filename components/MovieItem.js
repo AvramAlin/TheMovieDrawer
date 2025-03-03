@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     color: GlobalStyles.colors.gray700,
     fontSize: 16,
+    fontFamily: "dmsans-light",
     fontWeight: "600",
     textAlign: "center",
   },
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
   },
   ratingText: {
     color: "#f3eacf",
-    fontWeight: "bold",
+    fontFamily: "dmsans-bold",
     fontSize: 15,
   },
 });
