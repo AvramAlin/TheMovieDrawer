@@ -3,8 +3,9 @@ import React from "react";
 import { Ionicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { GlobalStyles } from "../assets/colors/GlobalStyles";
 import BackButton from "./UI/BackButton";
+import ButtonCustom from "./UI/ButtonCustom";
 
-export default function MovieSomeDetails({ movieDetails }) {
+export default function MovieSomeDetails({ movieDetails, onPressingAdd }) {
   // Function to convert minutes to hours and minutes
   const formatRuntime = (minutes) => {
     const hours = Math.floor(minutes / 60);
@@ -78,6 +79,12 @@ export default function MovieSomeDetails({ movieDetails }) {
           style={styles.backdrop}
         />
         <View style={styles.backdropGradient} />
+        <ButtonCustom
+          name="add"
+          size={32}
+          color="white"
+          onPress={onPressingAdd}
+        />
       </View>
 
       {/* Poster with shadow */}

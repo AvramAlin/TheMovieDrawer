@@ -6,7 +6,7 @@ import {
   Image,
   FlatList,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   getMovieCredits,
   getMovieDetails,
@@ -19,6 +19,8 @@ import MovieSomeDetails from "../components/MovieSomeDetails";
 import CastInfo from "../components/CastInfo";
 import SimilarMovies from "../components/SimilarMovies";
 import BackButton from "../components/UI/BackButton";
+import ModalCategories from "../components/ModalCategories";
+import { MoviesContext } from "../store/movies-context";
 
 export default function MovieDetailsScreen() {
   const route = useRoute();
@@ -27,6 +29,12 @@ export default function MovieDetailsScreen() {
   const [credits, setCredits] = useState(null);
   const [similarMovies, setSimilarMovies] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+  const movieContext = useContext(MoviesContext);
+
+  function handleAddMovieModal() {
+    setModalVisible(true);
+  }
 
   useEffect(() => {
     async function fetchMovieDetails() {
@@ -47,13 +55,25 @@ export default function MovieDetailsScreen() {
     return <LoadingOverlay />;
   }
 
+  function handleAddMovieToCategory(label) {
+    movieContext.addMovieToCategory(movieDetails, label);
+  }
+
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
-        <MovieSomeDetails movieDetails={movieDetails} />
+        <MovieSomeDetails
+          movieDetails={movieDetails}
+          onPressingAdd={handleAddMovieModal}
+        />
         <CastInfo credits={credits} />
         <SimilarMovies similarMovies={similarMovies} />
       </ScrollView>
+      <ModalCategories
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        onAddCategory={handleAddMovieToCategory}
+      />
     </>
   );
 }

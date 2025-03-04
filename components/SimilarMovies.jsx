@@ -8,8 +8,24 @@ import {
   Pressable,
 } from "react-native";
 import React from "react";
+import { useNavigation, useNavigationState } from "@react-navigation/native";
 
 export default function SimilarMovies({ similarMovies }) {
+  const routes = useNavigationState((state) => state?.routes);
+  const currentRoute = routes[routes.length - 1];
+  const navigation = useNavigation();
+  function handlePressSimilarMovie(id) {
+    if (currentRoute.name === "MovieDetailsHome") {
+      navigation.push("MovieDetailsHome", {
+        movieId: id,
+      });
+    } else if (currentRoute.name === "MovieDetailsMovies") {
+      navigation.push("MovieDetailsMovies", {
+        movieId: id,
+      });
+    }
+  }
+
   return (
     <>
       <Text style={styles.sectionTitle}>Similar Movies:</Text>
@@ -27,6 +43,7 @@ export default function SimilarMovies({ similarMovies }) {
                     : styles.similarMovieContainer
                 }
                 android_ripple={3}
+                onPress={() => handlePressSimilarMovie(item.id)}
               >
                 <Image
                   source={{

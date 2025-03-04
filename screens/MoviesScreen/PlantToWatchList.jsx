@@ -1,28 +1,18 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
-import { getPopularMovies } from "../../api/tmdb";
+import React, { useContext, useEffect, useState } from "react";
+import { getMovieDetails, getPopularMovies } from "../../api/tmdb";
 import MovieListItem from "../../components/MovieListItem";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import MovieList from "../../components/MovieList";
+import { MoviesContext } from "../../store/movies-context";
 
 function renderMoviesFunction({ item }) {
   return <MovieListItem movie={item} />;
 }
 export default function PlanToWatchList() {
-  const [planToWatchMovies, setPlanToWatchMovies] = useState([]);
-  useEffect(() => {
-    async function fetchFinishedMovies() {
-      try {
-        const data = await getPopularMovies(1);
-        setPlanToWatchMovies((prevMovies) => [...prevMovies, ...data]);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    fetchFinishedMovies();
-  }, [setPlanToWatchMovies]);
+  const moviesContext = useContext(MoviesContext);
 
-  return <MovieList movieData={planToWatchMovies} />;
+  return <MovieList movieData={moviesContext.planToWatchMovies} />;
 }
 
 const styles = StyleSheet.create({});
