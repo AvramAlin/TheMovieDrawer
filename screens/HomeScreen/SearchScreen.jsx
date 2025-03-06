@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  Platform,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
@@ -14,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { getSearchedMovies } from "../../api/tmdb";
 import HomeMovies from "../../components/HomeMovies";
 import SearchMovies from "../../components/SearchMovies";
+import BackButton from "../../components/UI/BackButton";
 
 const SearchScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -64,6 +66,7 @@ const SearchScreen = () => {
 
   return (
     <View style={styles.container}>
+      {Platform.OS === "android" && <BackButton style={styles.buttonAndroid} />}
       <View style={styles.searchBarContainer}>
         <Ionicons name="search" size={24} color="white" />
         <TextInput
@@ -101,7 +104,8 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.colors.gray500,
     borderRadius: 8,
     paddingHorizontal: 10,
-    marginBottom: 16,
+    marginBottom: 10,
+    marginLeft: Platform.OS === "android" && "10%",
   },
   searchInput: {
     flex: 1,
@@ -127,6 +131,9 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontFamily: "dmsans-bold",
+  },
+  buttonAndroid: {
+    left: 10,
   },
 });
 

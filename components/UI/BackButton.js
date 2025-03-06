@@ -4,12 +4,12 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons"; // Optional, for an icon-based back button
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 
-const BackButton = () => {
+const BackButton = ({ style }) => {
   const navigation = useNavigation();
 
   return (
     <TouchableOpacity
-      style={styles.backButton}
+      style={[styles.backButton, style]}
       onPress={() => navigation.goBack()}
     >
       <Ionicons

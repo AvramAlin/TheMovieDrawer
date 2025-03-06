@@ -21,6 +21,7 @@ import NowPlayingMoviesScreen from "./screens/HomeScreen/NowPlayingMoviesScreen"
 import MovieDetailsScreen from "./screens/MovieDetailsScreen";
 import MoviesContextProvider from "./store/movies-context";
 import SearchScreen from "./screens/HomeScreen/SearchScreen";
+import SearchIcon from "./components/UI/SearchIcon";
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -237,15 +238,8 @@ export default function App() {
                 title: "Home",
                 tabBarLabel: "Home",
                 headerRight: ({ tintColor }) => (
-                  <Ionicons
-                    name="search"
-                    size={22}
-                    color={tintColor}
-                    style={{
-                      paddingHorizontal: 6,
-                      marginHorizontal: 12,
-                      marginBottom: "2%",
-                    }}
+                  <SearchIcon
+                    tintColor={tintColor}
                     onPress={() => {
                       navigation.navigate("HomeTab", { screen: "SearchHome" });
                     }}
