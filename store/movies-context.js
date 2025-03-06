@@ -7,6 +7,7 @@ export const MoviesContext = createContext({
   droppedMovies: [],
   addMovieToCategory: (movie, category) => {},
   removeMovieFromCategory: (movieId, category) => {},
+  findMovie: (movieId, category) => {},
 });
 
 function MoviesContextProvider({ children }) {
@@ -55,6 +56,26 @@ function MoviesContextProvider({ children }) {
     }
   }
 
+  function findMovie(movieId, category) {
+    let movies = [];
+    switch (category) {
+      case "Finished":
+        movies = finishedMovies;
+        break;
+      case "Plan to Watch":
+        movies = planToWatchMovies;
+        break;
+      case "On Hold":
+        movies = onHoldMovies;
+        break;
+      case "Dropped":
+        movies = droppedMovies;
+        break;
+      default:
+        return false;
+    }
+    return movies.some((movie) => movie.id === movieId);
+  }
   const value = {
     finishedMovies: finishedMovies,
     planToWatchMovies: planToWatchMovies,
@@ -62,6 +83,7 @@ function MoviesContextProvider({ children }) {
     droppedMovies: droppedMovies,
     addMovieToCategory: addMovieToCategory,
     removeMovieFromCategory: removeMovieFromCategory,
+    findMovie: findMovie,
   };
 
   return (
