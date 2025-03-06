@@ -28,42 +28,48 @@ export default function SimilarMovies({ similarMovies }) {
 
   return (
     <>
-      <Text style={styles.sectionTitle}>Similar Movies:</Text>
-      <FlatList
-        horizontal
-        data={similarMovies}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => {
-          if (item.poster_path)
-            return (
-              <Pressable
-                style={({ pressed }) =>
-                  pressed
-                    ? [styles.similarMovieContainer, styles.pressed]
-                    : styles.similarMovieContainer
-                }
-                android_ripple={3}
-                onPress={() => handlePressSimilarMovie(item.id)}
-              >
-                <Image
-                  source={{
-                    uri: `https://image.tmdb.org/t/p/w185${item.poster_path}`,
-                  }}
-                  style={styles.similarMovieImage}
-                />
-                <Text style={styles.similarMovieTitle} numberOfLines={1}>
-                  {item.title}
-                </Text>
-              </Pressable>
-            );
-        }}
-        showsHorizontalScrollIndicator={false}
-      />
+      <View style={styles.container}>
+        <Text style={styles.sectionTitle}>Similar Movies:</Text>
+        <FlatList
+          horizontal
+          data={similarMovies}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => {
+            if (item.poster_path)
+              return (
+                <Pressable
+                  style={({ pressed }) =>
+                    pressed
+                      ? [styles.similarMovieContainer, styles.pressed]
+                      : styles.similarMovieContainer
+                  }
+                  android_ripple={3}
+                  onPress={() => handlePressSimilarMovie(item.id)}
+                >
+                  <Image
+                    source={{
+                      uri: `https://image.tmdb.org/t/p/w185${item.poster_path}`,
+                    }}
+                    style={styles.similarMovieImage}
+                  />
+                  <Text style={styles.similarMovieTitle} numberOfLines={1}>
+                    {item.title}
+                  </Text>
+                </Pressable>
+              );
+          }}
+          showsHorizontalScrollIndicator={false}
+        />
+      </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginBottom: 30,
+    marginTop: 4,
+  },
   sectionTitle: {
     fontSize: 20,
     fontWeight: "bold",
@@ -86,7 +92,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 70,
+    marginBottom: 1,
   },
   pressed: {
     opacity: 0.7,

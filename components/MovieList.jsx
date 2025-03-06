@@ -3,16 +3,16 @@ import React from "react";
 import MovieListItem from "./MovieListItem";
 import { GlobalStyles } from "../assets/colors/GlobalStyles";
 
-function renderMoviesFunction({ item }) {
-  return <MovieListItem movie={item} />;
+function renderMoviesFunction({ item }, movieCategory) {
+  return <MovieListItem movie={item} movieCategory={movieCategory} />;
 }
 
-export default function MovieList({ movieData }) {
+export default function MovieList({ movieData, movieCategory }) {
   return (
     <View style={styles.container}>
       <FlatList
         data={movieData}
-        renderItem={renderMoviesFunction}
+        renderItem={(itemData) => renderMoviesFunction(itemData, movieCategory)}
         keyExtractor={(item) => item.id}
       />
     </View>

@@ -7,15 +7,18 @@ import MovieList from "../../components/MovieList";
 import { MoviesContext } from "../../store/movies-context";
 import NoDataText from "../../components/NoDataText";
 
-function renderMoviesFunction({ item }) {
-  return <MovieListItem movie={item} />;
-}
 export default function DroppedList() {
   const moviesContext = useContext(MoviesContext);
+  const category = "Dropped";
 
   if (moviesContext.droppedMovies.length == 0) return <NoDataText />;
 
-  return <MovieList movieData={moviesContext.droppedMovies} />;
+  return (
+    <MovieList
+      movieData={moviesContext.droppedMovies}
+      movieCategory={category}
+    />
+  );
 }
 
 const styles = StyleSheet.create({});

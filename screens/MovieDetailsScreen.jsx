@@ -23,10 +23,14 @@ import BackButton from "../components/UI/BackButton";
 import ModalCategories from "../components/ModalCategories";
 import { MoviesContext } from "../store/movies-context";
 import CustomAlert from "../components/UI/CustomAlert";
+import RemoveButtonCustom from "../components/UI/RemoveButtonCustom";
+import DeletionModal from "../components/UI/DeletionModal";
 
 export default function MovieDetailsScreen() {
   const route = useRoute();
+  const navigation = useNavigation();
   const movieId = route.params?.movieId;
+  const movieCategory = route.params?.movieCategory;
   const [movieDetails, setMovieDetails] = useState(null);
   const [credits, setCredits] = useState(null);
   const [similarMovies, setSimilarMovies] = useState([]);
@@ -35,6 +39,7 @@ export default function MovieDetailsScreen() {
   const movieContext = useContext(MoviesContext);
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertCategory, setAlertCategory] = useState("");
+  const [deletionVisible, setDeletionVisible] = useState(false);
 
   function handleAddMovieModal() {
     setModalVisible(true);
@@ -63,16 +68,19 @@ export default function MovieDetailsScreen() {
     if (!movieContext.findMovie(movieId, label)) {
       movieContext.addMovieToCategory(movieDetails, label);
     } else {
-      // Alert.alert(
-      //   "Movie Already Added",
-      //   `This movie is already in your '${label}' movies list.`,
-      //   [{ text: "Ok", style: "cancel" }],
-      //   { cancelable: true }
-      // );
       setModalVisible(false);
       setAlertCategory(label);
       setAlertVisible(true);
     }
+  }
+
+  function handlePressRemoveItem() {
+    setDeletionVisible(true);
+  }
+
+  function handleRemoveMovieFromCategory() {
+    movieContext.removeMovieFromCategory(movieId, movieCategory);
+    navigation.goBack();
   }
 
   return (
@@ -84,6 +92,22 @@ export default function MovieDetailsScreen() {
         />
         <CastInfo credits={credits} />
         <SimilarMovies similarMovies={similarMovies} />
+        {movieCategory ? (
+          <>
+            <RemoveButtonCustom
+              icon="trash-bin-outline"
+              size={20}
+              text={"Remove item"}
+              onPress={handlePressRemoveItem}
+            />
+            <DeletionModal
+              visible={deletionVisible}
+              movieTitle={movieDetails.title}
+              onCancel={() => setDeletionVisible(false)}
+              onConfirm={handleRemoveMovieFromCategory}
+            />
+          </>
+        ) : null}
       </ScrollView>
       <ModalCategories
         modalVisible={modalVisible}
