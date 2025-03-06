@@ -95,7 +95,7 @@ export default function MovieDetailsScreen() {
         {movieCategory ? (
           <>
             <RemoveButtonCustom
-              icon="trash-bin-outline"
+              icon="trash-bin"
               size={20}
               text={"Remove item"}
               onPress={handlePressRemoveItem}

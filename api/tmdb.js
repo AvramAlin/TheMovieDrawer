@@ -111,3 +111,21 @@ export async function getSimilarMovies(id, page = 1) {
     );
   }
 }
+
+export async function getSearchedMovies(searchQuery, page = 1) {
+  try {
+    const response = await axios.get(`${BASE_URL}/search/movie`, {
+      params: {
+        api_key: API_KEY,
+        language: "en-US",
+        query: searchQuery,
+        page,
+      },
+    });
+    // console.log(response.data.results);
+    // console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch search results:", error);
+  }
+}

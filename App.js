@@ -20,6 +20,7 @@ import TopRatedMoviesScreen from "./screens/HomeScreen/TopRatedMoviesScreen";
 import NowPlayingMoviesScreen from "./screens/HomeScreen/NowPlayingMoviesScreen";
 import MovieDetailsScreen from "./screens/MovieDetailsScreen";
 import MoviesContextProvider from "./store/movies-context";
+import SearchScreen from "./screens/HomeScreen/SearchScreen";
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -44,6 +45,11 @@ function HomeStackScreen() {
           presentation: "modal",
         }}
       />
+      <HomeStack.Screen
+        name="SearchHome"
+        component={SearchScreen}
+        options={{ headerShown: false, presentation: "modal" }}
+      />
     </HomeStack.Navigator>
   );
 }
@@ -58,7 +64,7 @@ function HomeTopTabScreen() {
           elevation: 2, // Remove shadow on Android
           shadowOpacity: 0.5, // Remove shadow on iOS
           borderBottomWidth: 0,
-          paddingVertical: 4,
+          paddingVertical: 2,
         },
         tabBarIndicatorStyle: {
           backgroundColor: GlobalStyles.colors.accent500,
@@ -109,7 +115,7 @@ function MoviesTopTabScreen() {
           elevation: 2, // Remove shadow on Android
           shadowOpacity: 0.5, // Remove shadow on iOS
           borderBottomWidth: 0,
-          paddingVertical: 4,
+          paddingVertical: 2,
         },
         tabBarIndicatorStyle: {
           backgroundColor: GlobalStyles.colors.accent500,
@@ -212,20 +218,40 @@ export default function App() {
               tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
               tabBarActiveTintColor: GlobalStyles.colors.accent500,
               tabBarLabelStyle: { fontFamily: "dmsans-light" },
-              headerTitleStyle: { fontFamily: "dmsans-bold", fontSize: 24 },
+              headerTitleStyle: {
+                fontFamily: "dmsans-bold",
+                fontSize: 24,
+                alignSelf: "center",
+                paddingBottom: 5,
+              },
               headerTitle: "TheMovieDrawer",
             }}
           >
             <BottomTab.Screen
               name="HomeTab"
               component={HomeStackScreen}
-              options={{
+              options={({ navigation }) => ({
                 tabBarIcon: ({ color, size }) => (
                   <Ionicons name="home" color={color} size={size} />
                 ),
                 title: "Home",
                 tabBarLabel: "Home",
-              }}
+                headerRight: ({ tintColor }) => (
+                  <Ionicons
+                    name="search"
+                    size={22}
+                    color={tintColor}
+                    style={{
+                      paddingHorizontal: 6,
+                      marginHorizontal: 12,
+                      marginBottom: "2%",
+                    }}
+                    onPress={() => {
+                      navigation.navigate("HomeTab", { screen: "SearchHome" });
+                    }}
+                  />
+                ),
+              })}
             />
             <BottomTab.Screen
               name="MoviesTab"

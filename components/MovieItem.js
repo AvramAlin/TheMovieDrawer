@@ -24,7 +24,6 @@ export default function MovieItem({ posterPath, title, rating, id }) {
 
   return (
     <Pressable
-      android_ripple={2}
       style={({ pressed }) =>
         pressed
           ? [styles.movieContainer, styles.pressed]
@@ -37,7 +36,7 @@ export default function MovieItem({ posterPath, title, rating, id }) {
           style={styles.posterImage}
           source={{ uri: `${IMAGE_BASE_URL}${posterPath}` }}
         />
-        {rating && (
+        {formattedRating !== "N/A" && (
           <View style={styles.ratingContainer}>
             <Text style={styles.ratingText}>{formattedRating}</Text>
           </View>

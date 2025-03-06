@@ -69,7 +69,7 @@ export default function ModalCategories({
             <Pressable
               key={category.label}
               onPress={() => {
-                console.log(`Selected category: ${category.label}`);
+                // console.log(`Selected category: ${category.label}`);
                 onAddCategory(category.label);
                 closeModal();
               }}
