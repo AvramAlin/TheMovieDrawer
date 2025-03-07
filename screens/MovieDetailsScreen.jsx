@@ -67,6 +67,16 @@ export default function MovieDetailsScreen() {
   function handleAddMovieToCategory(label) {
     if (!movieContext.findMovie(movieId, label)) {
       movieContext.addMovieToCategory(movieDetails, label);
+      if (movieCategory) {
+        movieContext.removeMovieFromCategory(movieId, movieCategory);
+      } else {
+        const result = movieContext.findMovieGlobal(movieId);
+        if (result === false) {
+          console.log("E prima oara");
+        } else {
+          movieContext.removeMovieFromCategory(movieId, result);
+        }
+      }
     } else {
       setModalVisible(false);
       setAlertCategory(label);

@@ -8,6 +8,7 @@ export const MoviesContext = createContext({
   addMovieToCategory: (movie, category) => {},
   removeMovieFromCategory: (movieId, category) => {},
   findMovie: (movieId, category) => {},
+  findMovieGlobal: (movieId) => {},
 });
 
 function MoviesContextProvider({ children }) {
@@ -76,6 +77,18 @@ function MoviesContextProvider({ children }) {
     }
     return movies.some((movie) => movie.id === movieId);
   }
+
+  function findMovieGlobal(movieId) {
+    const finished = finishedMovies.some((movie) => movie.id === movieId);
+    if (finished) return "Finished";
+    const planToWatch = planToWatchMovies.some((movie) => movie.id === movieId);
+    if (planToWatch) return "Plan to Watch";
+    const onHold = onHoldMovies.some((movie) => movie.id === movieId);
+    if (onHold) return "On Hold";
+    const dropped = droppedMovies.some((movie) => movie.id === movieId);
+    if (dropped) return "Dropped";
+    return false;
+  }
   const value = {
     finishedMovies: finishedMovies,
     planToWatchMovies: planToWatchMovies,
@@ -84,6 +97,7 @@ function MoviesContextProvider({ children }) {
     addMovieToCategory: addMovieToCategory,
     removeMovieFromCategory: removeMovieFromCategory,
     findMovie: findMovie,
+    findMovieGlobal: findMovieGlobal,
   };
 
   return (
