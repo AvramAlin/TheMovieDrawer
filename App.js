@@ -22,6 +22,7 @@ import MovieDetailsScreen from "./screens/MovieDetailsScreen";
 import MoviesContextProvider from "./store/movies-context";
 import SearchScreen from "./screens/HomeScreen/SearchScreen";
 import SearchIcon from "./components/UI/SearchIcon";
+import UpcomingMoviesScreen from "./screens/HomeScreen/UpcomingMoviesScreen";
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -80,7 +81,7 @@ function HomeTopTabScreen() {
         },
         tabBarItemStyle: {
           width: "auto",
-          paddingHorizontal: 12,
+          paddingHorizontal: 11,
         },
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
         tabBarInactiveTintColor: GlobalStyles.colors.text500,
@@ -101,6 +102,11 @@ function HomeTopTabScreen() {
         name="NowPlayingMovies"
         component={NowPlayingMoviesScreen}
         options={{ title: "Now Playing" }}
+      />
+      <TopTab.Screen
+        name="UpcomingMovies"
+        component={UpcomingMoviesScreen}
+        options={{ title: "Upcoming" }}
       />
     </TopTab.Navigator>
   );

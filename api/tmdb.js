@@ -60,6 +60,33 @@ export async function getNowPlayingMovies(page = 1) {
   }
 }
 
+export const getUpcomingMovies = async (page = 1) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/movie/upcoming`, {
+      params: {
+        api_key: API_KEY,
+        language: "en-US",
+        page,
+      },
+    });
+    const movies = response.data.results;
+    const today = new Date();
+    const filteredMovies = movies.filter(
+      (movie) => new Date(movie.release_date) > today
+    );
+    // const sortedMovies = filteredMovies.sort(
+    //   (a, b) => b.popularity - a.popularity
+    // );
+    return filteredMovies;
+  } catch (error) {
+    console.error(
+      "Error fetching upcoming movies:",
+      error.response?.data || error.message
+    );
+    return [];
+  }
+};
+
 export async function getMovieDetails(id) {
   try {
     const response = await axios.get(`${BASE_URL}/movie/${id}`, {
