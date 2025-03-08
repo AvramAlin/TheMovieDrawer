@@ -1,10 +1,10 @@
 import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 import React from "react";
 import {} from "@expo/vector-icons";
-import { GlobalStyles } from "../assets/colors/GlobalStyles";
-import { getFormattedDate } from "../utils/date";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { GlobalStyles } from "../../assets/colors/GlobalStyles";
+import { getFormattedDate } from "../../utils/date";
 
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 export default function MovieListItem({ movie, movieCategory }) {

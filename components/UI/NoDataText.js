@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { GlobalStyles } from "../assets/colors/GlobalStyles";
+import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 
 export default function NoDataText({ message = "No data available" }) {
   return (

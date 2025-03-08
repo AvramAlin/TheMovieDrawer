@@ -7,8 +7,8 @@ import {
   Pressable,
 } from "react-native";
 import React from "react";
-import { GlobalStyles } from "../assets/colors/GlobalStyles";
 import { useNavigation } from "@react-navigation/native";
+import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 

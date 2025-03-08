@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 import { getPopularMovies } from "../../api/tmdb";
-import HomeMovies from "../../components/HomeMovies";
+import HomeMovies from "../../components/HomeComponents/HomeMovies";
 
 function PopularMoviesScreen() {
   const [movies, setMovies] = useState([]);

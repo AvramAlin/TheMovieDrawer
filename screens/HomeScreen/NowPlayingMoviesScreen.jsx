@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useState, useEffect } from "react";
-import HomeMovies from "../../components/HomeMovies";
 import { getNowPlayingMovies } from "../../api/tmdb";
+import HomeMovies from "../../components/HomeComponents/HomeMovies";
 
 export default function NowPlayingMoviesScreen() {
   const [movies, setMovies] = useState([]);

@@ -1,10 +1,9 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useContext, useEffect, useState } from "react";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
-import MovieList from "../../components/MovieList";
+import MovieList from "../../components/MoviesComponents/MovieList";
 import { MoviesContext } from "../../store/movies-context";
-import NoDataText from "../../components/NoDataText";
-
+import NoDataText from "../../components/UI/NoDataText";
 export default function FinishedList() {
   const moviesContext = useContext(MoviesContext);
   const category = "Finished";

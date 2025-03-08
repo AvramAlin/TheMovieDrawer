@@ -9,9 +9,9 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 import React from "react";
-import { GlobalStyles } from "../assets/colors/GlobalStyles";
-import ButtonCustom from "./UI/ButtonCustom";
 import { Ionicons } from "@expo/vector-icons";
+import { GlobalStyles } from "../../assets/colors/GlobalStyles";
+import ButtonCustom from "../UI/ButtonCustom";
 
 const CATEGORY_OPTIONS = [
   { label: "Finished", icon: "checkmark-circle-outline", color: "#4CAF50" },

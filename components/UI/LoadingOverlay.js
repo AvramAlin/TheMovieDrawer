@@ -1,6 +1,5 @@
 import { View, ActivityIndicator, StyleSheet } from "react-native";
-import { GlobalStyles } from "../assets/colors/GlobalStyles";
-
+import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 function LoadingOverlay() {
   return (
     <View style={styles.container}>

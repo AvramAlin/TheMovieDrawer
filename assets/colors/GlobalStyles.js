@@ -8,6 +8,7 @@ export const GlobalStyles = {
     primary700: "#2d0689",
     primary800: "#200364",
     accent500: "#f7bc0c",
+    accent400: "#f2bc48",
     accent200: "#eccc6b",
     error50: "#fcc4e4",
     error500: "#9b095c",
@@ -17,5 +18,7 @@ export const GlobalStyles = {
     background300: "#e2dfdf",
     text500: "#dad3d3",
     text800: "#535252",
+    dark500: "#2b2929",
+    listBackground: "#ebc45b",
   },
 };

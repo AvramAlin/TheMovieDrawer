@@ -1,8 +1,7 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import React from "react";
-import { GlobalStyles } from "../assets/colors/GlobalStyles";
-import MovieItem from "./MovieItem";
-
+import { GlobalStyles } from "../../assets/colors/GlobalStyles";
+import MovieItem from "../MoviesComponents/MovieItem";
 function renderMovieItem({ item }) {
   if (item.poster_path)
     return (

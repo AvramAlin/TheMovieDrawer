@@ -2,7 +2,7 @@
 import { StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
 import { getTopRatedMovies } from "../../api/tmdb";
-import HomeMovies from "../../components/HomeMovies";
+import HomeMovies from "../../components/HomeComponents/HomeMovies";
 
 function TopRatedMoviesScreen() {
   const [movies, setMovies] = useState([]);

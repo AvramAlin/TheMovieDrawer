@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import { Ionicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
-import { GlobalStyles } from "../assets/colors/GlobalStyles";
-import BackButton from "./UI/BackButton";
-import ButtonCustom from "./UI/ButtonCustom";
+import { GlobalStyles } from "../../assets/colors/GlobalStyles";
+import BackButton from "../UI/BackButton";
+import ButtonCustom from "../UI/ButtonCustom";
 
 export default function MovieSomeDetails({ movieDetails, onPressingAdd }) {
   // Function to convert minutes to hours and minutes

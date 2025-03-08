@@ -11,10 +11,8 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
-import { useNavigation } from "@react-navigation/native";
 import { getSearchedMovies } from "../../api/tmdb";
-import HomeMovies from "../../components/HomeMovies";
-import SearchMovies from "../../components/SearchMovies";
+import SearchMovies from "../../components/HomeComponents/SearchMovies";
 import BackButton from "../../components/UI/BackButton";
 
 const SearchScreen = () => {

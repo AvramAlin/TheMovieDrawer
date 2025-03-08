@@ -14,17 +14,17 @@ import {
   getSimilarMovies,
 } from "../api/tmdb";
 import { useRoute, useNavigation } from "@react-navigation/native";
-import LoadingOverlay from "../components/LoadingOverlay";
 import { GlobalStyles } from "../assets/colors/GlobalStyles";
-import MovieSomeDetails from "../components/MovieSomeDetails";
-import CastInfo from "../components/CastInfo";
-import SimilarMovies from "../components/SimilarMovies";
+import CastInfo from "../components/MoviesComponents/CastInfo";
+import SimilarMovies from "../components/MoviesComponents/SimilarMovies";
 import BackButton from "../components/UI/BackButton";
-import ModalCategories from "../components/ModalCategories";
 import { MoviesContext } from "../store/movies-context";
 import CustomAlert from "../components/UI/CustomAlert";
 import RemoveButtonCustom from "../components/UI/RemoveButtonCustom";
 import DeletionModal from "../components/UI/DeletionModal";
+import LoadingOverlay from "../components/UI/LoadingOverlay";
+import MovieSomeDetails from "../components/MoviesComponents/MovieSomeDetails";
+import ModalCategories from "../components/MoviesComponents/ModalCategories";
 
 export default function MovieDetailsScreen() {
   const route = useRoute();
