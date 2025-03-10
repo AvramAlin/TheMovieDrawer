@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import React from "react";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w185";
 
@@ -43,7 +44,12 @@ const renderList = (list) => {
         <View style={styles.listHeader}>
           <Text style={styles.listTitle}>{list.title}</Text>
           <View style={styles.movieCountContainer}>
-            <Text style={styles.movieCount}>{list.movies.length} movies</Text>
+            <Text style={styles.movieCount}>{list.movies.length}</Text>
+            <MaterialIcons
+              name="movie"
+              color={GlobalStyles.colors.background500}
+              size={20}
+            />
           </View>
         </View>
 
@@ -113,13 +119,13 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     marginBottom: 8,
-    backgroundColor: GlobalStyles.colors.dark500,
-    borderRadius: 12,
-    padding: 12,
-    elevation: 2,
+    backgroundColor: GlobalStyles.colors.background700,
+    borderRadius: 20,
+    padding: 8,
+    // elevation: 2,
     shadowColor: "#000",
     shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.3,
     shadowRadius: 5,
     borderWidth: 1,
     borderColor: GlobalStyles.colors.gray700,
@@ -129,25 +135,29 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: GlobalStyles.colors.background500,
+    borderBottomWidth: 2,
+    borderBottomColor: GlobalStyles.colors.dark500,
     paddingBottom: 10,
   },
   listTitle: {
     marginLeft: 5,
-    fontSize: 23,
+    fontSize: 20,
     fontWeight: "dmsans-bold",
-    color: GlobalStyles.colors.background500,
+    color: GlobalStyles.colors.dark500,
   },
   movieCountContainer: {
     backgroundColor: "black",
     borderRadius: 20,
     padding: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   movieCount: {
-    fontFamily: "dmsans-light",
+    fontFamily: "dmsans-bold",
     fontSize: 13,
     color: GlobalStyles.colors.background300,
+    marginHorizontal: 8,
   },
   movieListContent: {
     paddingVertical: 8,
