@@ -3,7 +3,7 @@ import { Entypo, Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 
-export default function AddCustomListButton() {
+export default function AddCustomListButton({ onPress }) {
   //   console.log("Merge");
 
   return (
@@ -11,6 +11,7 @@ export default function AddCustomListButton() {
       style={({ pressed }) =>
         pressed ? [styles.button, styles.pressed] : styles.button
       }
+      onPress={onPress}
     >
       <View style={styles.container}>
         <Entypo

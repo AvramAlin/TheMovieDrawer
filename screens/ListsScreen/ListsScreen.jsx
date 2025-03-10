@@ -12,39 +12,50 @@ import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import { useContext, useEffect, useState } from "react";
 import { getPopularMovies } from "../../api/tmdb";
 import CustomListItem from "../../components/CustomLists/CustomListItem";
-import AddCustomListButton from "../../components/UI/AddCustomListButton";
 import { LinearGradient } from "expo-linear-gradient";
 import { CustomListsContext } from "../../store/customLists-context";
+import AddCustomListButton from "../../components/UI/AddCustomListButton";
+import ModalAddList from "../../components/CustomLists/ModalAddList";
+import DeleteListAlert from "../../components/UI/DeleteListAlert";
 
 function ListsScreen() {
   const customListsContext = useContext(CustomListsContext);
-  const [customLists, setCustomLists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [modalVisible, setIsModalVisible] = useState(false);
+  const [deleteListModalVisible, setDeleteListModalVisible] = useState(false);
+  const [certainTitle, setCertainTitle] = useState("");
+  const [currentId, setCurrentId] = useState(null);
+
+  function handleAddList(title, description) {
+    const emptyMovies = [];
+
+    customListsContext.addCustomList(title, description, emptyMovies);
+  }
+
+  function handleLongPress(listId) {
+    setCertainTitle(
+      customListsContext.customLists.find((list) => list.id === listId).title
+    );
+    setCurrentId(listId);
+    setDeleteListModalVisible(true);
+  }
+
+  function handleDeleteList() {
+    customListsContext.deleteCustomList(currentId);
+    setCertainTitle("");
+    setCurrentId(null);
+    setDeleteListModalVisible(false);
+  }
 
   useEffect(() => {
     async function fetchMovies() {
       setIsLoading(true);
       try {
         const data = await getPopularMovies();
-        customListsContext.addCustomList("Best romance movies", data);
-        customListsContext.addCustomList("Hatz jonule", data);
-        const newList1 = {
-          id: 1,
-          title: "Best romance movies",
-          movies: data,
-        };
-        const newList2 = {
-          id: 2,
-          title: "For later later be later",
-          movies: data,
-        };
-        const newList3 = {
-          id: 3,
-          title: "My favs dramas",
-          movies: data,
-        };
-
-        setCustomLists([newList1, newList2, newList3]);
+        const desc1 = "Top romance movies that will be viewed tonight";
+        const desc2 = "something stupid but a solid description";
+        customListsContext.addCustomList("Best romance movies", desc1, data);
+        customListsContext.addCustomList("Hatz jonule", desc2, data);
       } catch (err) {
         console.log(err);
       } finally {
@@ -69,12 +80,26 @@ function ListsScreen() {
           <Text style={styles.screenTitle}>My Collection</Text>
         </View>
         <View style={styles.addListButton}>
-          <AddCustomListButton />
+          <AddCustomListButton onPress={() => setIsModalVisible(true)} />
         </View>
       </View>
       <View style={styles.containerCustomLists}>
-        <CustomListItem customLists={customListsContext.customLists} />
+        <CustomListItem
+          customLists={customListsContext.customLists}
+          onLongPress={handleLongPress}
+        />
       </View>
+      <ModalAddList
+        visible={modalVisible}
+        onClose={() => setIsModalVisible(false)}
+        onAddList={handleAddList}
+      />
+      <DeleteListAlert
+        listTitle={certainTitle}
+        visible={deleteListModalVisible}
+        onCancel={() => setDeleteListModalVisible(false)}
+        onConfirm={handleDeleteList}
+      />
     </View>
   );
 }

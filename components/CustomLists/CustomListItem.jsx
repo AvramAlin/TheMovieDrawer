@@ -10,63 +10,72 @@ import {
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w185";
 
-// Function to render a movie preview
-const renderMovieItem = ({ item, index }) => {
-  // Only show the first 5 movie posters
-  if (index > 4) return null;
+export default function CustomListItem({ customLists, onLongPress }) {
+  const navigation = useNavigation();
 
-  if (item.poster_path) {
+  function handleOpenList(listData) {
+    navigation.navigate("ListOpened", { listId: listData.id });
+  }
+
+  // Function to render a movie preview
+  const renderMovieItem = ({ item, index }) => {
+    // Only show the first 5 movie posters
+    if (index > 8) return null;
+
+    if (item.poster_path) {
+      return (
+        <Pressable style={styles.movieItem}>
+          <Image
+            source={{ uri: `${IMAGE_URL}${item.poster_path}` }}
+            style={styles.poster}
+            resizeMode="cover"
+          />
+        </Pressable>
+      );
+    }
+  };
+
+  const renderList = (list) => {
     return (
-      <Pressable style={styles.movieItem}>
-        <Image
-          source={{ uri: `${IMAGE_URL}${item.poster_path}` }}
-          style={styles.poster}
-          resizeMode="cover"
-        />
+      <Pressable
+        style={({ pressed }) =>
+          pressed
+            ? [styles.containerPressable, styles.pressed]
+            : styles.containerPressable
+        }
+        onPress={() => handleOpenList(list)}
+        onLongPress={() => onLongPress(list.id)}
+      >
+        <View key={list.id} style={styles.listContainer}>
+          <View style={styles.listHeader}>
+            <Text style={styles.listTitle}>{list.title}</Text>
+            <View style={styles.movieCountContainer}>
+              <Text style={styles.movieCount}>{list.movies.length}</Text>
+              <MaterialIcons
+                name="movie"
+                color={GlobalStyles.colors.background500}
+                size={20}
+              />
+            </View>
+          </View>
+
+          <FlatList
+            data={list.movies}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={renderMovieItem}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.movieListContent}
+          />
+        </View>
       </Pressable>
     );
-  }
-};
+  };
 
-const renderList = (list) => {
-  return (
-    <Pressable
-      style={({ pressed }) =>
-        pressed
-          ? [styles.containerPressable, styles.pressed]
-          : styles.containerPressable
-      }
-    >
-      <View key={list.id} style={styles.listContainer}>
-        <View style={styles.listHeader}>
-          <Text style={styles.listTitle}>{list.title}</Text>
-          <View style={styles.movieCountContainer}>
-            <Text style={styles.movieCount}>{list.movies.length}</Text>
-            <MaterialIcons
-              name="movie"
-              color={GlobalStyles.colors.background500}
-              size={20}
-            />
-          </View>
-        </View>
-
-        <FlatList
-          data={list.movies}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderMovieItem}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.movieListContent}
-        />
-      </View>
-    </Pressable>
-  );
-};
-
-export default function CustomListItem({ customLists }) {
   return (
     <View style={styles.container}>
       {customLists.length > 0 ? (
@@ -119,7 +128,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     marginBottom: 8,
-    backgroundColor: GlobalStyles.colors.background700,
+    backgroundColor: GlobalStyles.colors.dark500,
     borderRadius: 20,
     padding: 8,
     // elevation: 2,
@@ -136,17 +145,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
     borderBottomWidth: 2,
-    borderBottomColor: GlobalStyles.colors.dark500,
+    borderBottomColor: GlobalStyles.colors.text500,
     paddingBottom: 10,
   },
   listTitle: {
     marginLeft: 5,
     fontSize: 20,
     fontWeight: "dmsans-bold",
-    color: GlobalStyles.colors.dark500,
+    color: GlobalStyles.colors.text500,
   },
   movieCountContainer: {
-    backgroundColor: "black",
+    backgroundColor: GlobalStyles.colors.text800,
     borderRadius: 20,
     padding: 10,
     flexDirection: "row",
@@ -171,8 +180,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
   poster: {
-    width: posterWidth - 20,
-    height: (posterWidth - 20) * 1.5,
+    width: posterWidth - 35,
+    height: (posterWidth - 35) * 1.5,
     borderRadius: 8,
   },
 });

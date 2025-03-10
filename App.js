@@ -25,6 +25,7 @@ import SearchIcon from "./components/UI/SearchIcon";
 import UpcomingMoviesScreen from "./screens/HomeScreen/UpcomingMoviesScreen";
 import { LinearGradient } from "expo-linear-gradient";
 import CustomListsContextProvider from "./store/customLists-context";
+import ListOpened from "./components/CustomLists/ListOpened";
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -181,6 +182,14 @@ function ListsStackScreen() {
         name="ListsStack"
         component={ListsScreen}
         options={{ headerShown: false }}
+      />
+      <ListsStack.Screen
+        name="ListOpened"
+        component={ListOpened}
+        options={{
+          headerShown: false,
+          presentation: "modal",
+        }}
       />
     </ListsStack.Navigator>
   );
