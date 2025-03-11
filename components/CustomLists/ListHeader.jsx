@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View, Pressable, Platform } from "react-native";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import React from "react";
+import React, { useEffect } from "react";
 import BackButton from "../UI/BackButton";
+import { useContext } from "react";
+import { CustomListsContext } from "../../store/customLists-context";
 
 export default function ListHeader({ currentListData }) {
   return (
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
   },
   floatingButton: {
     position: "absolute",
-    bottom: "40%",
+    bottom: "45%",
     right: "7%",
     backgroundColor: GlobalStyles.colors.accent500,
     width: 50,

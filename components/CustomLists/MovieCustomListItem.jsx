@@ -1,16 +1,19 @@
 import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
+import { useContext } from "react";
+import { CustomListsContext } from "../../store/customLists-context";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w185";
 
-export default function MovieCustomListItem({ movie, onPress }) {
+export default function MovieCustomListItem({ movie, onPress, onLongPress }) {
   return (
     <Pressable
       style={({ pressed }) =>
         pressed ? [styles.container, styles.pressed] : styles.container
       }
       onPress={() => onPress(movie)}
+      onLongPress={() => onLongPress(movie.id)}
     >
       <Image
         source={{ uri: `${IMAGE_URL}${movie.poster_path}` }}

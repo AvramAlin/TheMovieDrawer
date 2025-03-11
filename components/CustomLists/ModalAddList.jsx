@@ -59,6 +59,7 @@ function ModalAddList({ visible, onClose, onAddList }) {
                   placeholderTextColor={GlobalStyles.colors.accent300}
                   value={title}
                   onChangeText={setTitle}
+                  maxLength={35}
                 />
 
                 <Text style={styles.inputLabel}>Description (optional)</Text>
