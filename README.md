@@ -1,4 +1,4 @@
-# Movie Drawer 🎬
+# Movie Drawer 🎬 (I AM CURRENTLY WORKING ON THIS PROJECT)
 
 Movie Drawer is a mobile app built with **React Native** that allows users to create, manage, and organize their own custom movie lists. Inspired by platforms like **Watch List** and **MyAnimeList**, this app helps users keep track of their favorite movies in a structured and user-friendly way.
 
