@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import React from "react";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w185";
@@ -76,6 +76,21 @@ export default function CustomListItem({ customLists, onLongPress }) {
     );
   };
 
+  const renderEmptyState = () => {
+    return (
+      <View style={styles.emptyContainer}>
+        <View style={styles.emptyIconContainer}>
+          <AntDesign
+            name="folderopen"
+            size={60}
+            color={GlobalStyles.colors.dark500}
+          />
+        </View>
+        <Text style={styles.emptyTitle}>No Lists Found</Text>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       {customLists.length > 0 ? (
@@ -87,11 +102,7 @@ export default function CustomListItem({ customLists, onLongPress }) {
           showsVerticalScrollIndicator={false}
         />
       ) : (
-        <View style={styles.centered}>
-          <Text style={styles.emptyText}>
-            No lists found. Create your first movie list!
-          </Text>
-        </View>
+        renderEmptyState()
       )}
     </View>
   );
@@ -114,13 +125,33 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  emptyText: {
-    color: GlobalStyles.colors.gray700,
-    fontSize: 16,
-    textAlign: "center",
-    alignItems: "center",
+  emptyContainer: {
+    flex: 1,
     justifyContent: "center",
-    marginTop: 250,
+    alignItems: "center",
+    padding: 24,
+  },
+  emptyIconContainer: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    backgroundColor: GlobalStyles.colors.background400,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 24,
+    borderWidth: 1,
+    borderColor: GlobalStyles.colors.dark500,
+    shadowColor: "black",
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 5,
+  },
+  emptyTitle: {
+    fontSize: 22,
+    fontFamily: "dmsans-bold",
+    color: GlobalStyles.colors.dark500,
+    marginBottom: 12,
   },
   listsContainer: {
     marginTop: 10,

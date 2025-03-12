@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   TextInput,
@@ -11,6 +11,7 @@ import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import { getSearchedMovies } from "../../api/tmdb";
 import BackButton from "../../components/UI/BackButton";
 import ListSearchMovies from "../../components/CustomLists/ListSearchMovie";
+import { useRoute } from "@react-navigation/native";
 
 const SearchCustomListMovie = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -18,6 +19,8 @@ const SearchCustomListMovie = () => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
+  const route = useRoute();
+  const listData = route.params.listData;
 
   function handleCloseSearch() {
     setSearchQuery("");
@@ -59,6 +62,10 @@ const SearchCustomListMovie = () => {
     }
   };
 
+  useEffect(() => {
+    // console.log(listData);
+  }, []);
+
   return (
     <View style={styles.container}>
       {Platform.OS === "android" && <BackButton style={styles.buttonAndroid} />}
@@ -77,16 +84,11 @@ const SearchCustomListMovie = () => {
           <Ionicons name="close" size={24} color="white" />
         </TouchableOpacity>
       </View>
-
-      {/* <SearchMovies
-        moviesData={searchResults}
-        onLoad={handleLoadMore}
-        isLoading={isLoading}
-      /> */}
       <ListSearchMovies
         onLoad={handleLoadMore}
         isLoading={isLoading}
         moviesData={searchResults}
+        listData={listData}
       />
     </View>
   );

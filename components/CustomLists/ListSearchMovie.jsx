@@ -3,21 +3,12 @@ import React from "react";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import ListMovieItem from "./ListMovieItem";
 
-function renderMovieItem({ item }) {
-  return (
-    <ListMovieItem
-      posterPath={item.poster_path}
-      title={item.title}
-      rating={item.vote_average}
-      id={item.id}
-      releaseYear={
-        item.release_date ? item.release_date.substring(0, 4) : "N/A"
-      }
-    />
-  );
-}
-
-export default function ListSearchMovies({ moviesData, onLoad, isLoading }) {
+export default function ListSearchMovies({
+  moviesData,
+  onLoad,
+  isLoading,
+  listData,
+}) {
   const renderFooter = () => {
     if (!isLoading) return null;
   };
@@ -29,6 +20,18 @@ export default function ListSearchMovies({ moviesData, onLoad, isLoading }) {
       </View>
     );
   };
+
+  function renderMovieItem({ item }) {
+    return (
+      <ListMovieItem
+        movieItem={item}
+        releaseYear={
+          item.release_date ? item.release_date.substring(0, 4) : "N/A"
+        }
+        listData={listData}
+      />
+    );
+  }
 
   return (
     <View style={styles.container}>

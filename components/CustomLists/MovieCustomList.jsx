@@ -59,6 +59,6 @@ export default function MovieCustomList({ listId }) {
 const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 4,
   },
 });

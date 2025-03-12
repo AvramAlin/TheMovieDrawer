@@ -9,7 +9,9 @@ export default function ListHeader({ currentListData }) {
   const navigation = useNavigation();
 
   function handleToggleSearchOnPress() {
-    navigation.navigate("ListSearchMovie");
+    navigation.navigate("ListSearchMovie", {
+      listData: currentListData,
+    });
   }
 
   return (

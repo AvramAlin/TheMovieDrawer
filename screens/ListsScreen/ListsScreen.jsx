@@ -47,31 +47,23 @@ function ListsScreen() {
     setDeleteListModalVisible(false);
   }
 
-  useEffect(() => {
-    async function fetchMovies() {
-      setIsLoading(true);
-      try {
-        const data = await getPopularMovies();
-        const desc1 = "Top romance movies that will be viewed tonight";
-        const desc2 = "something stupid but a solid description";
-        customListsContext.addCustomList("Best romance movies", desc1, data);
-        customListsContext.addCustomList("Hatz jonule", desc2, data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchMovies();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <View style={[styles.container, styles.centered]}>
-        <Text style={styles.loadingText}>Loading lists...</Text>
-      </View>
-    );
-  }
+  // useEffect(() => {
+  //   async function fetchMovies() {
+  //     setIsLoading(true);
+  //     try {
+  //       const data = await getPopularMovies();
+  //       const desc1 = "Top romance movies that will be viewed tonight";
+  //       const desc2 = "something stupid but a solid description";
+  //       customListsContext.addCustomList("Best romance movies", desc1, data);
+  //       customListsContext.addCustomList("Hatz jonule", desc2, data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   }
+  //   fetchMovies();
+  // }, []);
 
   return (
     <View style={styles.container}>
