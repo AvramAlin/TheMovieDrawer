@@ -6,6 +6,7 @@ import {
   Dimensions,
   Modal,
   Pressable,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { useEffect, useState } from "react";
 import React from "react";
@@ -57,43 +58,45 @@ export default function ModalCategories({
       animationType="none"
       onRequestClose={closeModal}
     >
-      <View style={styles.modalOverlay}>
-        <Animated.View
-          style={[
-            styles.bottomSheet,
-            { transform: [{ translateY: animation }] },
-          ]}
-        >
-          <Text style={styles.modalTitle}>Add Movie To</Text>
-          {CATEGORY_OPTIONS.map((category) => (
-            <Pressable
-              key={category.label}
-              onPress={() => {
-                // console.log(`Selected category: ${category.label}`);
-                onAddCategory(category.label);
-                closeModal();
-              }}
-              style={styles.optionButton}
-            >
-              <Ionicons
-                name={category.icon}
-                size={24}
-                color={category.color}
-                style={styles.icon}
-              />
-              <Text style={styles.optionText}>{category.label}</Text>
-            </Pressable>
-          ))}
+      <TouchableWithoutFeedback onPress={closeModal}>
+        <View style={styles.modalOverlay}>
+          <Animated.View
+            style={[
+              styles.bottomSheet,
+              { transform: [{ translateY: animation }] },
+            ]}
+          >
+            <Text style={styles.modalTitle}>Add Movie To</Text>
+            {CATEGORY_OPTIONS.map((category) => (
+              <Pressable
+                key={category.label}
+                onPress={() => {
+                  // console.log(`Selected category: ${category.label}`);
+                  onAddCategory(category.label);
+                  closeModal();
+                }}
+                style={styles.optionButton}
+              >
+                <Ionicons
+                  name={category.icon}
+                  size={24}
+                  color={category.color}
+                  style={styles.icon}
+                />
+                <Text style={styles.optionText}>{category.label}</Text>
+              </Pressable>
+            ))}
 
-          <ButtonCustom
-            name="close"
-            onPress={closeModal}
-            size={24}
-            color={GlobalStyles.colors.background500}
-            style={styles.buttonContainer}
-          />
-        </Animated.View>
-      </View>
+            <ButtonCustom
+              name="close"
+              onPress={closeModal}
+              size={24}
+              color={GlobalStyles.colors.background500}
+              style={styles.buttonContainer}
+            />
+          </Animated.View>
+        </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 }

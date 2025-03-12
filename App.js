@@ -26,6 +26,7 @@ import UpcomingMoviesScreen from "./screens/HomeScreen/UpcomingMoviesScreen";
 import { LinearGradient } from "expo-linear-gradient";
 import CustomListsContextProvider from "./store/customLists-context";
 import ListOpened from "./components/CustomLists/ListOpened";
+import SearchCustomListMovie from "./screens/ListsScreen/SearchCustomListMovie";
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -189,6 +190,15 @@ function ListsStackScreen() {
         options={{
           headerShown: false,
           presentation: "modal",
+        }}
+      />
+      <ListsStack.Screen
+        name="ListSearchMovie"
+        component={SearchCustomListMovie}
+        options={{
+          presentation: "modal",
+          title: "Add Movie",
+          headerShown: false,
         }}
       />
     </ListsStack.Navigator>

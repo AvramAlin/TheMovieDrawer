@@ -2,13 +2,9 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { useRoute } from "@react-navigation/native";
 import { CustomListsContext } from "../../store/customLists-context";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { GlobalStyles } from "../../assets/colors/GlobalStyles";
-
 import ListHeader from "./ListHeader";
 import MovieCustomList from "./MovieCustomList";
 import NoDataText from "../UI/NoDataText";
-import DeleteMovieListAlert from "../UI/DeleteMovieListAlert";
 
 export default function ListOpened() {
   const route = useRoute();

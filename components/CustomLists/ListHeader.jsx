@@ -1,12 +1,17 @@
 import { StyleSheet, Text, View, Pressable, Platform } from "react-native";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import React, { useEffect } from "react";
+import React from "react";
 import BackButton from "../UI/BackButton";
-import { useContext } from "react";
-import { CustomListsContext } from "../../store/customLists-context";
+import { useNavigation } from "@react-navigation/native";
 
 export default function ListHeader({ currentListData }) {
+  const navigation = useNavigation();
+
+  function handleToggleSearchOnPress() {
+    navigation.navigate("ListSearchMovie");
+  }
+
   return (
     <View>
       <View style={styles.listHeader}>
@@ -46,6 +51,7 @@ export default function ListHeader({ currentListData }) {
             ? [styles.floatingButton, styles.pressed]
             : styles.floatingButton
         }
+        onPress={handleToggleSearchOnPress}
       >
         <MaterialCommunityIcons
           name="plus"
