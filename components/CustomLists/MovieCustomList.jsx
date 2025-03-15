@@ -3,6 +3,9 @@ import MovieCustomListItem from "./MovieCustomListItem";
 import { useContext, useState, useEffect } from "react";
 import { CustomListsContext } from "../../store/customLists-context";
 import DeleteMovieListAlert from "../UI/DeleteMovieListAlert";
+import MovieModal from "./MovieModal";
+import { getMovieDetails } from "../../api/tmdb";
+
 export default function MovieCustomList({ listId }) {
   const customListsContext = useContext(CustomListsContext);
   const [movies, setMovies] = useState(
@@ -10,14 +13,19 @@ export default function MovieCustomList({ listId }) {
   );
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const [movieId, setMovieId] = useState(null);
+  const [modalDetailsVisible, setModalDetailsVisible] = useState(false);
+  const [movieDetails, setMovieDetails] = useState(null);
 
   useEffect(() => {
     setMovies(customListsContext.getList(listId)?.movies || []);
   }, [customListsContext.customLists]);
 
-  function handleMoviePress(movie) {
-    console.log("Movie pressed:", movie.title);
+  async function handlePressMovie(movieId) {
+    const result = await getMovieDetails(movieId);
+    setMovieDetails(result);
+    setModalDetailsVisible(true);
   }
+
   function handleLongPress(movieId) {
     setModalIsVisible(true);
     setMovieId(movieId);
@@ -29,6 +37,10 @@ export default function MovieCustomList({ listId }) {
     setModalIsVisible(false);
   }
 
+  function handleAddMovieToWatchList() {
+    console.log("need to add");
+  }
+
   return (
     <View style={styles.listContainer}>
       <FlatList
@@ -37,7 +49,7 @@ export default function MovieCustomList({ listId }) {
         renderItem={({ item }) => (
           <MovieCustomListItem
             movie={item}
-            onPress={handleMoviePress}
+            onPress={handlePressMovie}
             onLongPress={handleLongPress}
           />
         )}
@@ -51,6 +63,12 @@ export default function MovieCustomList({ listId }) {
             .find((list) => list.id === listId)
             .movies.find((movie) => movie.id === movieId)?.title
         }
+      />
+      <MovieModal
+        visible={modalDetailsVisible}
+        onClose={() => setModalDetailsVisible(false)}
+        movie={movieDetails}
+        onAddToWatchList={handleAddMovieToWatchList}
       />
     </View>
   );

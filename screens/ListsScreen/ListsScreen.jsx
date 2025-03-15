@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import { useContext, useEffect, useState } from "react";
-import { getPopularMovies } from "../../api/tmdb";
+import { getGenres, getPopularMovies } from "../../api/tmdb";
 import CustomListItem from "../../components/CustomLists/CustomListItem";
 import { LinearGradient } from "expo-linear-gradient";
 import { CustomListsContext } from "../../store/customLists-context";

@@ -1,34 +1,38 @@
 import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CustomListsContext } from "../../store/customLists-context";
+import { getMovieDetails } from "../../api/tmdb";
+import MovieModal from "./MovieModal";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w185";
 
 export default function MovieCustomListItem({ movie, onPress, onLongPress }) {
   return (
-    <Pressable
-      style={({ pressed }) =>
-        pressed ? [styles.container, styles.pressed] : styles.container
-      }
-      onPress={() => onPress(movie)}
-      onLongPress={() => onLongPress(movie.id)}
-    >
-      <Image
-        source={{ uri: `${IMAGE_URL}${movie.poster_path}` }}
-        style={styles.poster}
-      />
-      <View style={styles.infoContainer}>
-        <Text style={styles.title}>{movie.title}</Text>
-        <Text style={styles.year}>{movie.release_date?.split("-")[0]}</Text>
-      </View>
-      <Ionicons
-        name="chevron-forward"
-        size={24}
-        color={GlobalStyles.colors.dark200}
-      />
-    </Pressable>
+    <>
+      <Pressable
+        style={({ pressed }) =>
+          pressed ? [styles.container, styles.pressed] : styles.container
+        }
+        onPress={() => onPress(movie.id)}
+        onLongPress={() => onLongPress(movie.id)}
+      >
+        <Image
+          source={{ uri: `${IMAGE_URL}${movie.poster_path}` }}
+          style={styles.poster}
+        />
+        <View style={styles.infoContainer}>
+          <Text style={styles.title}>{movie.title}</Text>
+          <Text style={styles.year}>{movie.release_date?.split("-")[0]}</Text>
+        </View>
+        <Ionicons
+          name="chevron-forward"
+          size={24}
+          color={GlobalStyles.colors.dark200}
+        />
+      </Pressable>
+    </>
   );
 }
 

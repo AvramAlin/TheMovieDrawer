@@ -156,3 +156,18 @@ export async function getSearchedMovies(searchQuery, page = 1) {
     console.error("Failed to fetch search results:", error);
   }
 }
+
+export async function getGenres() {
+  try {
+    const response = await axios.get(`${BASE_URL}/genre/movie/list`, {
+      params: {
+        api_key: API_KEY,
+        language: "en-US",
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch movie genres", error);
+  }
+}

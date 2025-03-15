@@ -45,7 +45,7 @@ export default function MovieListItem({ movie, movieCategory }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 2,
+    padding: 1,
     margin: 2.5,
     width: "100%",
     height: "80%",
@@ -61,16 +61,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   image: {
-    height: 145,
-    width: 95,
+    height: 125,
+    width: 75,
   },
   titleContainer: {
-    marginTop: 60,
+    marginTop: 50,
     justifyContent: "center",
     alignItems: "center",
   },
   title: {
-    fontSize: 17,
+    fontSize: 16,
     fontFamily: "dmsans-bold",
     textAlign: "center",
   },
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   dateText: {
-    fontSize: 13,
+    fontSize: 12,
     color: GlobalStyles.colors.gray500 || "#666",
     alignSelf: "flex-end",
     marginBottom: 3,

@@ -11,14 +11,15 @@ import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import React from "react";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import NoDataText from "../UI/NoDataText";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w185";
 
-export default function CustomListItem({ customLists, onLongPress }) {
+export default function CustomListItem({ customLists, onLongPress, genres }) {
   const navigation = useNavigation();
 
   function handleOpenList(listData) {
-    navigation.navigate("ListOpened", { listId: listData.id });
+    navigation.navigate("ListOpened", { listId: listData.id, genres: genres });
   }
 
   // Function to render a movie preview
@@ -76,21 +77,6 @@ export default function CustomListItem({ customLists, onLongPress }) {
     );
   };
 
-  const renderEmptyState = () => {
-    return (
-      <View style={styles.emptyContainer}>
-        <View style={styles.emptyIconContainer}>
-          <AntDesign
-            name="folderopen"
-            size={60}
-            color={GlobalStyles.colors.dark500}
-          />
-        </View>
-        <Text style={styles.emptyTitle}>No Lists Found</Text>
-      </View>
-    );
-  };
-
   return (
     <View style={styles.container}>
       {customLists.length > 0 ? (
@@ -102,7 +88,7 @@ export default function CustomListItem({ customLists, onLongPress }) {
           showsVerticalScrollIndicator={false}
         />
       ) : (
-        renderEmptyState()
+        <NoDataText />
       )}
     </View>
   );
@@ -124,34 +110,6 @@ const styles = StyleSheet.create({
   centered: {
     justifyContent: "center",
     alignItems: "center",
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 24,
-  },
-  emptyIconContainer: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: GlobalStyles.colors.background400,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 24,
-    borderWidth: 1,
-    borderColor: GlobalStyles.colors.dark500,
-    shadowColor: "black",
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: 5,
-  },
-  emptyTitle: {
-    fontSize: 22,
-    fontFamily: "dmsans-bold",
-    color: GlobalStyles.colors.dark500,
-    marginBottom: 12,
   },
   listsContainer: {
     marginTop: 10,
