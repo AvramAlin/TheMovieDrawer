@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Modal,
   View,
@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
+import { MoviesContext } from "../../store/movies-context";
 
 export default function MovieDetailsModal({
   visible,
@@ -19,6 +20,19 @@ export default function MovieDetailsModal({
   onClose,
   onAddToWatchList,
 }) {
+  const moviesContext = useContext(MoviesContext);
+  const [isExistent, setIsExistent] = useState(false);
+
+  useEffect(() => {
+    if (movie) {
+      if (moviesContext.findMovieGlobal(movie.id) !== false) {
+        setIsExistent(true);
+      } else {
+        setIsExistent(false);
+      }
+    }
+  }, [movie, moviesContext]);
+
   if (!movie) return null;
 
   // Format runtime in hours and minutes
@@ -118,17 +132,25 @@ export default function MovieDetailsModal({
                 </ScrollView>
 
                 <View style={styles.buttonContainer}>
-                  <TouchableOpacity
-                    style={styles.addButton}
-                    onPress={onAddToWatchList}
-                  >
-                    <AntDesign
-                      name="plus"
-                      size={16}
-                      color={GlobalStyles.colors.dark500}
-                    />
-                    <Text style={styles.addButtonText}>Add to Watchlist</Text>
-                  </TouchableOpacity>
+                  {isExistent ? (
+                    <View style={styles.existentContainer}>
+                      <Text style={styles.existentText}>
+                        Already added to WatchList
+                      </Text>
+                    </View>
+                  ) : (
+                    <TouchableOpacity
+                      style={styles.addButton}
+                      onPress={onAddToWatchList}
+                    >
+                      <AntDesign
+                        name="plus"
+                        size={16}
+                        color={GlobalStyles.colors.dark500}
+                      />
+                      <Text style={styles.addButtonText}>Add to Watchlist</Text>
+                    </TouchableOpacity>
+                  )}
                 </View>
               </View>
             </View>
@@ -272,6 +294,21 @@ const styles = StyleSheet.create({
   },
   addButtonText: {
     color: GlobalStyles.colors.dark500,
+    fontSize: 15,
+    fontFamily: "dmsans-bold",
+    marginLeft: 8,
+  },
+  existentContainer: {
+    flex: 2,
+    flexDirection: "row",
+    backgroundColor: GlobalStyles.colors.dark500,
+    padding: 12,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  existentText: {
+    color: GlobalStyles.colors.background500,
     fontSize: 15,
     fontFamily: "dmsans-bold",
     marginLeft: 8,

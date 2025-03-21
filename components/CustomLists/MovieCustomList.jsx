@@ -5,9 +5,11 @@ import { CustomListsContext } from "../../store/customLists-context";
 import DeleteMovieListAlert from "../UI/DeleteMovieListAlert";
 import MovieModal from "./MovieModal";
 import { getMovieDetails } from "../../api/tmdb";
+import { MoviesContext } from "../../store/movies-context";
 
 export default function MovieCustomList({ listId }) {
   const customListsContext = useContext(CustomListsContext);
+  const moviesContext = useContext(MoviesContext);
   const [movies, setMovies] = useState(
     customListsContext.customLists.find((list) => list.id === listId).movies
   );
@@ -38,7 +40,8 @@ export default function MovieCustomList({ listId }) {
   }
 
   function handleAddMovieToWatchList() {
-    console.log("need to add");
+    moviesContext.addMovieToCategory(movieDetails, "Plan to Watch");
+    //console.log("added");
   }
 
   return (
