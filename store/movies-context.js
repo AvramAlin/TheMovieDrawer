@@ -1,4 +1,13 @@
-import { createContext, useState } from "react";
+// context/MoviesContext.js
+import React, { createContext, useState, useEffect } from "react";
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+} from "firebase/firestore";
+import { FIREBASE_AUTH, FIRESTORE_DATABASE } from "../firebase/firebaseConfig";
 
 export const MoviesContext = createContext({
   finishedMovies: [],
@@ -17,40 +26,174 @@ function MoviesContextProvider({ children }) {
   const [onHoldMovies, setOnHoldMovies] = useState([]);
   const [droppedMovies, setDroppedMovies] = useState([]);
 
+  // Helper: Load movies for the current user from Firestore
+  async function fetchMoviesData(userId) {
+    const userDocRef = doc(FIRESTORE_DATABASE, "users", userId);
+    try {
+      const docSnap = await getDoc(userDocRef);
+      if (docSnap.exists() && docSnap.data().movies) {
+        const moviesData = docSnap.data().movies;
+        setFinishedMovies(moviesData.finished || []);
+        setPlanToWatchMovies(moviesData.planToWatch || []);
+        setOnHoldMovies(moviesData.onHold || []);
+        setDroppedMovies(moviesData.dropped || []);
+      } else {
+        // If no movies data exists, clear the states
+        setFinishedMovies([]);
+        setPlanToWatchMovies([]);
+        setOnHoldMovies([]);
+        setDroppedMovies([]);
+      }
+    } catch (error) {
+      console.error("Error fetching movies data:", error);
+    }
+  }
+
+  // Listen for auth state changes to fetch the right movies data
+  useEffect(() => {
+    const unsubscribe = FIREBASE_AUTH.onAuthStateChanged((user) => {
+      if (user) {
+        fetchMoviesData(user.uid);
+      } else {
+        // Clear movies state when there's no authenticated user
+        setFinishedMovies([]);
+        setPlanToWatchMovies([]);
+        setOnHoldMovies([]);
+        setDroppedMovies([]);
+      }
+    });
+    return unsubscribe;
+  }, []);
+
+  // Helper: Update Firestore for current user movies data
+  async function updateFirestoreMovies(updatedMovies) {
+    const user = FIREBASE_AUTH.currentUser;
+    if (!user) return;
+    const userDocRef = doc(FIRESTORE_DATABASE, "users", user.uid);
+    try {
+      await updateDoc(userDocRef, { movies: updatedMovies });
+    } catch (error) {
+      console.error("Error updating movies in Firestore:", error);
+    }
+  }
+
   function addMovieToCategory(movie, category) {
+    let updatedMovies;
     switch (category) {
       case "Finished":
-        setFinishedMovies((prev) => [...prev, movie]);
+        setFinishedMovies((prev) => {
+          const updated = [...prev, movie];
+          updatedMovies = {
+            finished: updated,
+            planToWatch: planToWatchMovies,
+            onHold: onHoldMovies,
+            dropped: droppedMovies,
+          };
+          updateFirestoreMovies(updatedMovies);
+          return updated;
+        });
         break;
       case "Plan to Watch":
-        setPlanToWatchMovies((prev) => [...prev, movie]);
+        setPlanToWatchMovies((prev) => {
+          const updated = [...prev, movie];
+          updatedMovies = {
+            finished: finishedMovies,
+            planToWatch: updated,
+            onHold: onHoldMovies,
+            dropped: droppedMovies,
+          };
+          updateFirestoreMovies(updatedMovies);
+          return updated;
+        });
         break;
       case "On Hold":
-        setOnHoldMovies((prev) => [...prev, movie]);
+        setOnHoldMovies((prev) => {
+          const updated = [...prev, movie];
+          updatedMovies = {
+            finished: finishedMovies,
+            planToWatch: planToWatchMovies,
+            onHold: updated,
+            dropped: droppedMovies,
+          };
+          updateFirestoreMovies(updatedMovies);
+          return updated;
+        });
         break;
       case "Dropped":
-        setDroppedMovies((prev) => [...prev, movie]);
+        setDroppedMovies((prev) => {
+          const updated = [...prev, movie];
+          updatedMovies = {
+            finished: finishedMovies,
+            planToWatch: planToWatchMovies,
+            onHold: onHoldMovies,
+            dropped: updated,
+          };
+          updateFirestoreMovies(updatedMovies);
+          return updated;
+        });
         break;
       default:
         break;
     }
   }
+
   function removeMovieFromCategory(movieId, category) {
+    let updatedMovies;
     const filterMovies = (movies) =>
       movies.filter((movie) => movie.id !== movieId);
 
     switch (category) {
       case "Finished":
-        setFinishedMovies(filterMovies);
+        setFinishedMovies((prev) => {
+          const updated = filterMovies(prev);
+          updatedMovies = {
+            finished: updated,
+            planToWatch: planToWatchMovies,
+            onHold: onHoldMovies,
+            dropped: droppedMovies,
+          };
+          updateFirestoreMovies(updatedMovies);
+          return updated;
+        });
         break;
       case "Plan to Watch":
-        setPlanToWatchMovies(filterMovies);
+        setPlanToWatchMovies((prev) => {
+          const updated = filterMovies(prev);
+          updatedMovies = {
+            finished: finishedMovies,
+            planToWatch: updated,
+            onHold: onHoldMovies,
+            dropped: droppedMovies,
+          };
+          updateFirestoreMovies(updatedMovies);
+          return updated;
+        });
         break;
       case "On Hold":
-        setOnHoldMovies(filterMovies);
+        setOnHoldMovies((prev) => {
+          const updated = filterMovies(prev);
+          updatedMovies = {
+            finished: finishedMovies,
+            planToWatch: planToWatchMovies,
+            onHold: updated,
+            dropped: droppedMovies,
+          };
+          updateFirestoreMovies(updatedMovies);
+          return updated;
+        });
         break;
       case "Dropped":
-        setDroppedMovies(filterMovies);
+        setDroppedMovies((prev) => {
+          const updated = filterMovies(prev);
+          updatedMovies = {
+            finished: finishedMovies,
+            planToWatch: planToWatchMovies,
+            onHold: onHoldMovies,
+            dropped: updated,
+          };
+          updateFirestoreMovies(updatedMovies);
+          return updated;
+        });
         break;
       default:
         break;
@@ -79,25 +222,23 @@ function MoviesContextProvider({ children }) {
   }
 
   function findMovieGlobal(movieId) {
-    const finished = finishedMovies.some((movie) => movie.id === movieId);
-    if (finished) return "Finished";
-    const planToWatch = planToWatchMovies.some((movie) => movie.id === movieId);
-    if (planToWatch) return "Plan to Watch";
-    const onHold = onHoldMovies.some((movie) => movie.id === movieId);
-    if (onHold) return "On Hold";
-    const dropped = droppedMovies.some((movie) => movie.id === movieId);
-    if (dropped) return "Dropped";
+    if (finishedMovies.some((movie) => movie.id === movieId)) return "Finished";
+    if (planToWatchMovies.some((movie) => movie.id === movieId))
+      return "Plan to Watch";
+    if (onHoldMovies.some((movie) => movie.id === movieId)) return "On Hold";
+    if (droppedMovies.some((movie) => movie.id === movieId)) return "Dropped";
     return false;
   }
+
   const value = {
-    finishedMovies: finishedMovies,
-    planToWatchMovies: planToWatchMovies,
-    onHoldMovies: onHoldMovies,
-    droppedMovies: droppedMovies,
-    addMovieToCategory: addMovieToCategory,
-    removeMovieFromCategory: removeMovieFromCategory,
-    findMovie: findMovie,
-    findMovieGlobal: findMovieGlobal,
+    finishedMovies,
+    planToWatchMovies,
+    onHoldMovies,
+    droppedMovies,
+    addMovieToCategory,
+    removeMovieFromCategory,
+    findMovie,
+    findMovieGlobal,
   };
 
   return (

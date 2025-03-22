@@ -36,3 +36,4 @@ yarn-error.*
 *.tsbuildinfo
 
 keys.js
+firebase/

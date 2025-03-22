@@ -1,14 +1,8 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  Pressable,
-} from "react-native";
+import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
+import { FontAwesome } from "@expo/vector-icons"; // Import the FontAwesome icon set
 
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
@@ -38,6 +32,11 @@ export default function MovieItem({ posterPath, title, rating, id }) {
         />
         {formattedRating !== "N/A" && (
           <View style={styles.ratingContainer}>
+            <FontAwesome
+              name="star"
+              size={16}
+              color={GlobalStyles.colors.accent500}
+            />
             <Text style={styles.ratingText}>{formattedRating}</Text>
           </View>
         )}
@@ -59,7 +58,6 @@ const styles = StyleSheet.create({
     position: "relative",
     backgroundColor: "white",
     borderRadius: 12,
-    // overflow: "hidden",
     elevation: 4,
     shadowColor: "#000",
     shadowOffset: { width: 1, height: 1 },
@@ -84,6 +82,8 @@ const styles = StyleSheet.create({
     bottom: 8,
     right: 8,
     backgroundColor: "rgba(0, 0, 0, 0.7)",
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 12,
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     color: "#f3eacf",
     fontFamily: "dmsans-bold",
     fontSize: 15,
+    marginLeft: 4,
   },
   pressed: {
     opacity: 0.8,
