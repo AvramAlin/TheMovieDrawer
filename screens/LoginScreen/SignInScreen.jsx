@@ -131,7 +131,10 @@ function SignInScreen() {
       </View>
 
       {loading ? (
-        <ActivityIndicator size="large" color={GlobalStyles.colors.dark500} />
+        <ActivityIndicator
+          size="large"
+          color={GlobalStyles.colors.background500}
+        />
       ) : (
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.signInButton} onPress={signIn}>

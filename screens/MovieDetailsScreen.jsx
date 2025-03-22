@@ -66,16 +66,11 @@ export default function MovieDetailsScreen() {
 
   function handleAddMovieToCategory(label) {
     if (!movieContext.findMovie(movieId, label)) {
-      movieContext.addMovieToCategory(movieDetails, label);
-      if (movieCategory) {
-        movieContext.removeMovieFromCategory(movieId, movieCategory);
+      const result = movieContext.findMovieGlobal(movieId);
+      if (result === false) {
+        movieContext.addMovieToCategory(movieDetails, label);
       } else {
-        const result = movieContext.findMovieGlobal(movieId);
-        if (result === false) {
-          console.log("E prima oara");
-        } else {
-          movieContext.removeMovieFromCategory(movieId, result);
-        }
+        movieContext.moveMovieBetweenCategories(movieDetails, result, label);
       }
     } else {
       setModalVisible(false);

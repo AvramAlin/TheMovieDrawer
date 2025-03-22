@@ -18,6 +18,7 @@ export const MoviesContext = createContext({
   removeMovieFromCategory: (movieId, category) => {},
   findMovie: (movieId, category) => {},
   findMovieGlobal: (movieId) => {},
+  moveMovieBetweenCategories: (movie, oldCategory, newCategory) => {},
 });
 
 function MoviesContextProvider({ children }) {
@@ -230,6 +231,61 @@ function MoviesContextProvider({ children }) {
     return false;
   }
 
+  function moveMovieBetweenCategories(movie, oldCategory, newCategory) {
+    // First update the state
+    let updatedFinished = [...finishedMovies];
+    let updatedPlanToWatch = [...planToWatchMovies];
+    let updatedOnHold = [...onHoldMovies];
+    let updatedDropped = [...droppedMovies];
+    // Remove from old category if specified
+    if (oldCategory) {
+      switch (oldCategory) {
+        case "Finished":
+          updatedFinished = updatedFinished.filter((m) => m.id !== movie.id);
+          break;
+        case "Plan to Watch":
+          updatedPlanToWatch = updatedPlanToWatch.filter(
+            (m) => m.id !== movie.id
+          );
+          break;
+        case "On Hold":
+          updatedOnHold = updatedOnHold.filter((m) => m.id !== movie.id);
+          break;
+        case "Dropped":
+          updatedDropped = updatedDropped.filter((m) => m.id !== movie.id);
+          break;
+      }
+    }
+    // Add to new category
+    switch (newCategory) {
+      case "Finished":
+        updatedFinished.push(movie);
+        break;
+      case "Plan to Watch":
+        updatedPlanToWatch.push(movie);
+        break;
+      case "On Hold":
+        updatedOnHold.push(movie);
+        break;
+      case "Dropped":
+        updatedDropped.push(movie);
+        break;
+    }
+    // Update state
+    setFinishedMovies(updatedFinished);
+    setPlanToWatchMovies(updatedPlanToWatch);
+    setOnHoldMovies(updatedOnHold);
+    setDroppedMovies(updatedDropped);
+    // Update Firestore with a single operation
+    const updatedMovies = {
+      finished: updatedFinished,
+      planToWatch: updatedPlanToWatch,
+      onHold: updatedOnHold,
+      dropped: updatedDropped,
+    };
+    updateFirestoreMovies(updatedMovies);
+  }
+
   const value = {
     finishedMovies,
     planToWatchMovies,
@@ -239,6 +295,7 @@ function MoviesContextProvider({ children }) {
     removeMovieFromCategory,
     findMovie,
     findMovieGlobal,
+    moveMovieBetweenCategories,
   };
 
   return (
