@@ -77,76 +77,78 @@ function SignInScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={[
-          GlobalStyles.colors.primary700,
-          GlobalStyles.colors.primary500,
-        ]}
-        style={styles.background}
-      />
-
-      <View style={styles.logoContainer}>
-        <Text style={styles.title}>TheMovieDrawer</Text>
-        <Text style={styles.subtitle}>
-          Track and organize your movie journey
-        </Text>
-      </View>
-
-      <View style={styles.formContainer}>
-        <View style={styles.inputContainer}>
-          <Ionicons
-            name="mail-outline"
-            size={22}
-            color={GlobalStyles.colors.accent500}
-            style={styles.inputIcon}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            placeholderTextColor={GlobalStyles.colors.accent300}
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Ionicons
-            name="lock-closed-outline"
-            size={22}
-            color={GlobalStyles.colors.accent500}
-            style={styles.inputIcon}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            placeholderTextColor={GlobalStyles.colors.accent300}
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-          />
-        </View>
-      </View>
-
-      {loading ? (
-        <ActivityIndicator
-          size="large"
-          color={GlobalStyles.colors.background500}
+    <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <LinearGradient
+          colors={[
+            GlobalStyles.colors.primary700,
+            GlobalStyles.colors.primary500,
+          ]}
+          style={styles.background}
         />
-      ) : (
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.signInButton} onPress={signIn}>
-            <Text style={styles.buttonText}>Sign in</Text>
-          </TouchableOpacity>
 
-          <TouchableOpacity style={styles.registerButton} onPress={signUp}>
-            <Text style={styles.registerButtonText}>Register</Text>
-          </TouchableOpacity>
+        <View style={styles.logoContainer}>
+          <Text style={styles.title}>TheMovieDrawer</Text>
+          <Text style={styles.subtitle}>
+            Track and organize your movie journey
+          </Text>
         </View>
-      )}
-    </View>
+
+        <View style={styles.formContainer}>
+          <View style={styles.inputContainer}>
+            <Ionicons
+              name="mail-outline"
+              size={22}
+              color={GlobalStyles.colors.accent500}
+              style={styles.inputIcon}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              placeholderTextColor={GlobalStyles.colors.accent300}
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Ionicons
+              name="lock-closed-outline"
+              size={22}
+              color={GlobalStyles.colors.accent500}
+              style={styles.inputIcon}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              placeholderTextColor={GlobalStyles.colors.accent300}
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
+          </View>
+        </View>
+
+        {loading ? (
+          <ActivityIndicator
+            size="large"
+            color={GlobalStyles.colors.background500}
+          />
+        ) : (
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.signInButton} onPress={signIn}>
+              <Text style={styles.buttonText}>Sign in</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.registerButton} onPress={signUp}>
+              <Text style={styles.registerButtonText}>Register</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -168,14 +170,14 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   title: {
-    fontSize: 36,
+    fontSize: 38,
     fontFamily: "dmsans-bold",
     color: GlobalStyles.colors.background500,
     marginBottom: 10,
   },
   subtitle: {
-    fontSize: 16,
-    fontFamily: "dmsans-light",
+    fontSize: 14,
+    fontFamily: "dmsans-bold",
     color: GlobalStyles.colors.accent500,
     textAlign: "center",
     marginHorizontal: 30,
@@ -187,7 +189,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(255,255,255,0.9)",
+    backgroundColor: GlobalStyles.colors.background500,
     borderRadius: 8,
     marginBottom: 12,
     paddingHorizontal: 12,
@@ -208,7 +210,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#fff",
+    backgroundColor: GlobalStyles.colors.background500,
     borderRadius: 8,
     padding: 16,
     marginBottom: 12,
@@ -224,7 +226,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "rgba(255,255,255,0.3)",
     borderWidth: 1,
-    borderColor: "#fff",
+    borderColor: GlobalStyles.colors.background500,
     borderRadius: 8,
     padding: 16,
     marginBottom: 12,

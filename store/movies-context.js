@@ -79,11 +79,12 @@ function MoviesContextProvider({ children }) {
   }
 
   function addMovieToCategory(movie, category) {
+    const movieWithTimestamp = { ...movie, addedAt: new Date().toISOString() };
     let updatedMovies;
     switch (category) {
       case "Finished":
         setFinishedMovies((prev) => {
-          const updated = [...prev, movie];
+          const updated = [...prev, movieWithTimestamp];
           updatedMovies = {
             finished: updated,
             planToWatch: planToWatchMovies,
@@ -96,7 +97,7 @@ function MoviesContextProvider({ children }) {
         break;
       case "Plan to Watch":
         setPlanToWatchMovies((prev) => {
-          const updated = [...prev, movie];
+          const updated = [...prev, movieWithTimestamp];
           updatedMovies = {
             finished: finishedMovies,
             planToWatch: updated,
@@ -109,7 +110,7 @@ function MoviesContextProvider({ children }) {
         break;
       case "On Hold":
         setOnHoldMovies((prev) => {
-          const updated = [...prev, movie];
+          const updated = [...prev, movieWithTimestamp];
           updatedMovies = {
             finished: finishedMovies,
             planToWatch: planToWatchMovies,
@@ -122,7 +123,7 @@ function MoviesContextProvider({ children }) {
         break;
       case "Dropped":
         setDroppedMovies((prev) => {
-          const updated = [...prev, movie];
+          const updated = [...prev, movieWithTimestamp];
           updatedMovies = {
             finished: finishedMovies,
             planToWatch: planToWatchMovies,
@@ -256,19 +257,20 @@ function MoviesContextProvider({ children }) {
           break;
       }
     }
+    const movieWithTimestamp = { ...movie, addedAt: new Date().toISOString() };
     // Add to new category
     switch (newCategory) {
       case "Finished":
-        updatedFinished.push(movie);
+        updatedFinished.push(movieWithTimestamp);
         break;
       case "Plan to Watch":
-        updatedPlanToWatch.push(movie);
+        updatedPlanToWatch.push(movieWithTimestamp);
         break;
       case "On Hold":
-        updatedOnHold.push(movie);
+        updatedOnHold.push(movieWithTimestamp);
         break;
       case "Dropped":
-        updatedDropped.push(movie);
+        updatedDropped.push(movieWithTimestamp);
         break;
     }
     // Update state

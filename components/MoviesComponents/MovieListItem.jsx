@@ -9,7 +9,10 @@ import { getFormattedDate } from "../../utils/date";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 export default function MovieListItem({ movie, movieCategory }) {
   const navigation = useNavigation();
-
+  const addedAt =
+    movie.addedAt === undefined
+      ? "No record"
+      : getFormattedDate(new Date(movie.addedAt));
   function handleNavigate() {
     navigation.navigate("MovieDetailsMovies", {
       movieId: movie.id,
@@ -31,9 +34,7 @@ export default function MovieListItem({ movie, movieCategory }) {
             <View style={styles.titleContainer}>
               <Text style={styles.title}>{movie.title}</Text>
             </View>
-            <Text style={styles.dateText}>
-              Added {getFormattedDate(new Date())}
-            </Text>
+            <Text style={styles.dateText}>Added {addedAt}</Text>
           </View>
           <AntDesign name="right" size={18} color="black" style={styles.icon} />
         </View>

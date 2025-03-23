@@ -4,9 +4,12 @@ import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import { FIREBASE_AUTH } from "../../firebase/firebaseConfig";
 
 export default function ProfileScreen({ navigation }) {
+  const user = FIREBASE_AUTH.currentUser;
+
   return (
     <View style={styles.container}>
-      <Text>ProfileScreen</Text>
+      <Text>{user.email}</Text>
+
       <Pressable
         onPress={() => FIREBASE_AUTH.signOut()}
         style={({ pressed }) => (pressed ? { opacity: 0.6 } : null)}
