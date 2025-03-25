@@ -1,23 +1,45 @@
 import { Image, StyleSheet, Text, View, Pressable } from "react-native";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {} from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import { getFormattedDate } from "../../utils/date";
+import { FavoriteMoviesContext } from "../../store/favorite-context";
 
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 export default function MovieListItem({ movie, movieCategory }) {
   const navigation = useNavigation();
+  const favoriteMovies = useContext(FavoriteMoviesContext);
+  const [iconName, setIconName] = useState(
+    favoriteMovies.isMovieFavorite(movie.id) ? "favorite" : "favorite-border"
+  );
   const addedAt =
     movie.addedAt === undefined
       ? "No record"
       : getFormattedDate(new Date(movie.addedAt));
+
+  useEffect(() => {
+    setIconName(
+      favoriteMovies.isMovieFavorite(movie.id) ? "favorite" : "favorite-border"
+    );
+  }, [favoriteMovies]);
+
   function handleNavigate() {
     navigation.navigate("MovieDetailsMovies", {
       movieId: movie.id,
       movieCategory: movieCategory,
     });
+  }
+
+  function handleFavoritePress() {
+    if (iconName === "favorite-border") {
+      setIconName("favorite");
+      favoriteMovies.addFavoriteMovie(movie);
+    } else {
+      setIconName("favorite-border");
+      favoriteMovies.removeFavoriteMovie(movie.id);
+    }
   }
   return (
     <Pressable
@@ -36,7 +58,14 @@ export default function MovieListItem({ movie, movieCategory }) {
             </View>
             <Text style={styles.dateText}>Added {addedAt}</Text>
           </View>
-          <AntDesign name="right" size={18} color="black" style={styles.icon} />
+          <Pressable onPress={handleFavoritePress}>
+            <MaterialIcons
+              name={iconName}
+              size={25}
+              color="black"
+              style={styles.icon}
+            />
+          </Pressable>
         </View>
       </View>
     </Pressable>
@@ -92,7 +121,9 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.colors.background500,
   },
   icon: {
+    zIndex: 10,
     paddingTop: 3,
     paddingHorizontal: 2,
+    right: 7,
   },
 });

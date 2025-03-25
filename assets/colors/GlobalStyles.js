@@ -22,6 +22,7 @@ export const GlobalStyles = {
     text800: "#535252",
     dark500: "#2b2929",
     dark200: "#434242",
+    dark300: "#4c4949",
     listBackground: "#ebc45b",
   },
 };

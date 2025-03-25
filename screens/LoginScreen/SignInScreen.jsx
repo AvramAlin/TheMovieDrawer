@@ -38,6 +38,7 @@ function SignInScreen() {
         dropped: [],
       },
       customLists: [],
+      favoriteMovies: [],
     });
   }
 
