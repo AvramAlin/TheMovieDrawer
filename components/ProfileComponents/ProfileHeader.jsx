@@ -8,15 +8,29 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import { Ionicons } from "@expo/vector-icons"; // Make sure you have this package installed
 import { UserDetailsContext } from "../../store/userDetails-context";
 import ProfilePictureSelector from "./ProfilePictureSelector";
+import backgroundImage from "../../assets/images/background.webp";
+
 export default function ProfileHeader() {
   const userDetailsContext = useContext(UserDetailsContext);
   const [isEditing, setIsEditing] = useState(false);
-  const [newUsername, setNewUsername] = useState("");
+  const [newUsername, setNewUsername] = useState(
+    userDetailsContext.userDetails.username
+  );
+  const [blurRadius, setBlurRadius] = useState(2);
+
+  useEffect(() => {
+    // After a short delay, increase the blur radius
+    const timer = setTimeout(() => {
+      setBlurRadius(9);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleSaveUsername = () => {
     userDetailsContext.updateUsername(newUsername);
@@ -33,10 +47,10 @@ export default function ProfileHeader() {
     >
       <ImageBackground
         style={{ flex: 1, backgroundColor: GlobalStyles.colors.primary400 }}
-        source={require("../../assets/images/background4.jpg")}
-        resizeMode="center"
+        source={backgroundImage}
+        resizeMode="cover"
         imageStyle={{ opacity: 0.5 }}
-        blurRadius={9}
+        blurRadius={blurRadius}
       >
         <View style={styles.headerContainer}>
           <Image

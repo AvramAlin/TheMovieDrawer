@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -144,6 +144,15 @@ export default function ProfilePictureSelector() {
   const [loadingImages, setLoadingImages] = useState({});
   const userDetailsContext = useContext(UserDetailsContext);
 
+  useEffect(() => {
+    // Initialize loadingImages state for all avatar seeds
+    const initialLoadingState = AVATAR_SEEDS.reduce((acc, seed) => {
+      acc[seed] = true; // Set all seeds to true (loading)
+      return acc;
+    }, {});
+    setLoadingImages(initialLoadingState);
+  }, []);
+
   const handleSelectAvatar = (seed) => {
     setSelectedSeed(seed);
   };
@@ -169,11 +178,6 @@ export default function ProfilePictureSelector() {
   const renderAvatarOption = ({ item }) => {
     const avatarUrl = `${DICEBEAR_API}?seed=${item}`;
     const isSelected = selectedSeed === item;
-
-    // Set loading state for this image if not already set
-    if (loadingImages[item] === undefined) {
-      setLoadingImages((prev) => ({ ...prev, [item]: true }));
-    }
 
     return (
       <TouchableOpacity

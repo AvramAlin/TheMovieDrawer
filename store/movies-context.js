@@ -19,6 +19,13 @@ export const MoviesContext = createContext({
   findMovie: (movieId, category) => {},
   findMovieGlobal: (movieId) => {},
   moveMovieBetweenCategories: (movie, oldCategory, newCategory) => {},
+  addRatingToMovie: (movieId, rating) => {},
+  moveMovieBetweenCategoriesWithRating: (
+    movie,
+    oldCategory,
+    newCategory,
+    rating
+  ) => {},
 });
 
 function MoviesContextProvider({ children }) {
@@ -288,6 +295,115 @@ function MoviesContextProvider({ children }) {
     updateFirestoreMovies(updatedMovies);
   }
 
+  function addRatingToMovie(movieId, rating) {
+    // Validate rating is between 1-10
+    if (rating < 1 || rating > 10 || !Number.isInteger(rating)) {
+      console.error("Rating must be an integer between 1 and 10");
+      return;
+    }
+
+    setFinishedMovies((prev) => {
+      // Find the movie in the finished movies array
+      const updatedFinished = prev.map((movie) => {
+        if (movie.id === movieId) {
+          // Add or update the userRating property
+          return { ...movie, userRating: rating };
+        }
+        return movie;
+      });
+
+      // Update Firestore
+      const updatedMovies = {
+        finished: updatedFinished,
+        planToWatch: planToWatchMovies,
+        onHold: onHoldMovies,
+        dropped: droppedMovies,
+      };
+      updateFirestoreMovies(updatedMovies);
+
+      return updatedFinished;
+    });
+  }
+
+  function moveMovieBetweenCategoriesWithRating(
+    movie,
+    oldCategory,
+    newCategory,
+    rating = null
+  ) {
+    // First update the state
+    let updatedFinished = [...finishedMovies];
+    let updatedPlanToWatch = [...planToWatchMovies];
+    let updatedOnHold = [...onHoldMovies];
+    let updatedDropped = [...droppedMovies];
+
+    // Remove from old category if specified
+    if (oldCategory) {
+      switch (oldCategory) {
+        case "Finished":
+          updatedFinished = updatedFinished.filter((m) => m.id !== movie.id);
+          break;
+        case "Plan to Watch":
+          updatedPlanToWatch = updatedPlanToWatch.filter(
+            (m) => m.id !== movie.id
+          );
+          break;
+        case "On Hold":
+          updatedOnHold = updatedOnHold.filter((m) => m.id !== movie.id);
+          break;
+        case "Dropped":
+          updatedDropped = updatedDropped.filter((m) => m.id !== movie.id);
+          break;
+      }
+    }
+
+    // Prepare movie object with timestamp
+    let movieToAdd = { ...movie, addedAt: new Date().toISOString() };
+
+    // If rating is provided and newCategory is "Finished", add rating to the movie
+    if (rating !== null && newCategory === "Finished") {
+      // Validate rating is between 1-10
+      if (rating < 1 || rating > 10 || !Number.isInteger(rating)) {
+        console.error("Rating must be an integer between 1 and 10");
+        return;
+      }
+
+      // Add rating to the movie object
+      movieToAdd = { ...movieToAdd, userRating: rating };
+    }
+
+    // Add to new category
+    switch (newCategory) {
+      case "Finished":
+        updatedFinished.push(movieToAdd);
+        break;
+      case "Plan to Watch":
+        updatedPlanToWatch.push(movieToAdd);
+        break;
+      case "On Hold":
+        updatedOnHold.push(movieToAdd);
+        break;
+      case "Dropped":
+        updatedDropped.push(movieToAdd);
+        break;
+    }
+
+    // Update state
+    setFinishedMovies(updatedFinished);
+    setPlanToWatchMovies(updatedPlanToWatch);
+    setOnHoldMovies(updatedOnHold);
+    setDroppedMovies(updatedDropped);
+
+    // Update Firestore with a single operation
+    const updatedMovies = {
+      finished: updatedFinished,
+      planToWatch: updatedPlanToWatch,
+      onHold: updatedOnHold,
+      dropped: updatedDropped,
+    };
+    updateFirestoreMovies(updatedMovies);
+  }
+
   const value = {
     finishedMovies,
     planToWatchMovies,
@@ -298,6 +414,8 @@ function MoviesContextProvider({ children }) {
     findMovie,
     findMovieGlobal,
     moveMovieBetweenCategories,
+    addRatingToMovie,
+    moveMovieBetweenCategoriesWithRating,
   };
 
   return (

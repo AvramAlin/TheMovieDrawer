@@ -36,6 +36,7 @@ export default function ProfileScreen({ navigation }) {
           onFavoriteScreenClick={handleNavigateFavorites}
         />
 
+        <SectionPressable iconName="trophy" textInput="Achievements" />
         <SectionPressable iconName="settings-sharp" textInput="Settings" />
         <SectionPressable
           iconName="information-circle-outline"

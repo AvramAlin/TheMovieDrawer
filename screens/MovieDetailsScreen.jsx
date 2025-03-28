@@ -25,6 +25,7 @@ import DeletionModal from "../components/UI/DeletionModal";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
 import MovieSomeDetails from "../components/MoviesComponents/MovieSomeDetails";
 import ModalCategories from "../components/MoviesComponents/ModalCategories";
+import RatingInputModal from "../components/MoviesComponents/RatingInputModal";
 
 export default function MovieDetailsScreen() {
   const route = useRoute();
@@ -40,6 +41,7 @@ export default function MovieDetailsScreen() {
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertCategory, setAlertCategory] = useState("");
   const [deletionVisible, setDeletionVisible] = useState(false);
+  const [ratingModalVisible, setRatingModalVisible] = useState(false);
 
   function handleAddMovieModal() {
     setModalVisible(true);
@@ -64,9 +66,18 @@ export default function MovieDetailsScreen() {
     return <LoadingOverlay />;
   }
 
+  // Modify your handleAddMovieToCategory function
   function handleAddMovieToCategory(label) {
     if (!movieContext.findMovie(movieId, label)) {
       const result = movieContext.findMovieGlobal(movieId);
+
+      if (label === "Finished") {
+        // If adding to Finished category, show rating modal
+        setRatingModalVisible(true);
+        setModalVisible(false);
+        return;
+      }
+
       if (result === false) {
         movieContext.addMovieToCategory(movieDetails, label);
       } else {
@@ -76,6 +87,25 @@ export default function MovieDetailsScreen() {
       setModalVisible(false);
       setAlertCategory(label);
       setAlertVisible(true);
+    }
+  }
+
+  // Add this function to handle rating submission
+  function handleRatingSubmit(rating) {
+    const result = movieContext.findMovieGlobal(movieId);
+
+    if (result === false) {
+      // Add movie to Finished category
+      movieContext.addMovieToCategory(movieDetails, "Finished");
+      // Then add rating
+      movieContext.addRatingToMovie(movieId, rating);
+    } else {
+      movieContext.moveMovieBetweenCategoriesWithRating(
+        movieDetails,
+        result,
+        "Finished",
+        rating
+      );
     }
   }
 
@@ -123,6 +153,11 @@ export default function MovieDetailsScreen() {
         visible={alertVisible}
         category={alertCategory}
         onClose={() => setAlertVisible(false)}
+      />
+      <RatingInputModal
+        visible={ratingModalVisible}
+        onClose={() => setRatingModalVisible(false)}
+        onSubmit={handleRatingSubmit}
       />
     </>
   );

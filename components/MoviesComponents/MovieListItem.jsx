@@ -1,16 +1,20 @@
 import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
-import {} from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import { getFormattedDate } from "../../utils/date";
 import { FavoriteMoviesContext } from "../../store/favorite-context";
+import { MoviesContext } from "../../store/movies-context";
 
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 export default function MovieListItem({ movie, movieCategory }) {
   const navigation = useNavigation();
   const favoriteMovies = useContext(FavoriteMoviesContext);
+  const moviesContext = useContext(MoviesContext);
+  const movieItem = moviesContext.finishedMovies.find(
+    (theMovie) => theMovie.id === movie.id
+  );
   const [iconName, setIconName] = useState(
     favoriteMovies.isMovieFavorite(movie.id) ? "favorite" : "favorite-border"
   );
@@ -56,7 +60,23 @@ export default function MovieListItem({ movie, movieCategory }) {
             <View style={styles.titleContainer}>
               <Text style={styles.title}>{movie.title}</Text>
             </View>
-            <Text style={styles.dateText}>Added {addedAt}</Text>
+            {movieCategory === "Finished" ? (
+              <View style={styles.rowContainer}>
+                <View style={styles.rowContainerGrade}>
+                  <MaterialIcons
+                    name="grade"
+                    size={18}
+                    color={GlobalStyles.colors.accent500}
+                  />
+                  <Text style={styles.textGrade}>
+                    {movieItem.userRating ? movieItem.userRating : "NA"}
+                  </Text>
+                </View>
+                <Text style={styles.dateText}>Added {addedAt}</Text>
+              </View>
+            ) : (
+              <Text style={styles.dateText}>Added {addedAt}</Text>
+            )}
           </View>
           <Pressable onPress={handleFavoritePress}>
             <MaterialIcons
@@ -125,5 +145,23 @@ const styles = StyleSheet.create({
     paddingTop: 3,
     paddingHorizontal: 2,
     right: 7,
+  },
+  rowContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  rowContainerGrade: {
+    marginBottom: 5,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: GlobalStyles.colors.dark500,
+    padding: 5,
+    borderRadius: 20,
+  },
+  textGrade: {
+    fontFamily: "dmsans-light",
+    paddingHorizontal: 5,
+    color: GlobalStyles.colors.background500,
   },
 });
