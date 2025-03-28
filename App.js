@@ -32,6 +32,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_AUTH } from "./firebase/firebaseConfig";
 import FavoriteMoviesContextProvider from "./store/favorite-context";
 import FavoritesScreen from "./screens/ProfileScreen/FavoritesScreen";
+import UserDetailsContextProvider from "./store/userDetails-context";
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -260,106 +261,112 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <FavoriteMoviesContextProvider>
-        <MoviesContextProvider>
-          <CustomListsContextProvider>
-            <NavigationContainer>
-              {!user ? (
-                <LoginStack.Navigator screenOptions={{ headerShown: false }}>
-                  <LoginStack.Screen name="SignIn" component={SignInScreen} />
-                </LoginStack.Navigator>
-              ) : (
-                <BottomTab.Navigator
-                  screenOptions={{
-                    headerStyle: {
-                      backgroundColor: GlobalStyles.colors.primary500,
-                    },
-                    headerTintColor: GlobalStyles.colors.text500,
-                    tabBarStyle: {
-                      backgroundColor: GlobalStyles.colors.primary500,
-                    },
-                    tabBarActiveTintColor: GlobalStyles.colors.accent500,
-                    tabBarLabelStyle: { fontFamily: "dmsans-light" },
-                    headerTitleStyle: {
-                      fontFamily: "dmsans-bold",
-                      fontSize: 25,
-                      alignSelf: "center",
-                      paddingBottom: 5,
-                    },
-                    headerTitle: "TheMovieDrawer",
-                    headerBackground: () => (
-                      <LinearGradient
-                        colors={[
-                          GlobalStyles.colors.primary700,
-                          GlobalStyles.colors.primary500,
-                        ]}
-                        style={{ flex: 1 }}
-                      />
-                    ),
-                  }}
-                >
-                  <BottomTab.Screen
-                    name="HomeTab"
-                    component={HomeStackScreen}
-                    options={({ navigation }) => ({
-                      tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="home" color={color} size={size} />
-                      ),
-                      title: "Home",
-                      tabBarLabel: "Home",
-                      headerRight: ({ tintColor }) => (
-                        <SearchIcon
-                          tintColor={tintColor}
-                          onPress={() => {
-                            navigation.navigate("HomeTab", {
-                              screen: "SearchHome",
-                            });
-                          }}
+      <UserDetailsContextProvider>
+        <FavoriteMoviesContextProvider>
+          <MoviesContextProvider>
+            <CustomListsContextProvider>
+              <NavigationContainer>
+                {!user ? (
+                  <LoginStack.Navigator screenOptions={{ headerShown: false }}>
+                    <LoginStack.Screen name="SignIn" component={SignInScreen} />
+                  </LoginStack.Navigator>
+                ) : (
+                  <BottomTab.Navigator
+                    screenOptions={{
+                      headerStyle: {
+                        backgroundColor: GlobalStyles.colors.primary500,
+                      },
+                      headerTintColor: GlobalStyles.colors.text500,
+                      tabBarStyle: {
+                        backgroundColor: GlobalStyles.colors.primary500,
+                      },
+                      tabBarActiveTintColor: GlobalStyles.colors.accent500,
+                      tabBarLabelStyle: { fontFamily: "dmsans-light" },
+                      headerTitleStyle: {
+                        fontFamily: "dmsans-bold",
+                        fontSize: 25,
+                        alignSelf: "center",
+                        paddingBottom: 5,
+                      },
+                      headerTitle: "TheMovieDrawer",
+                      headerBackground: () => (
+                        <LinearGradient
+                          colors={[
+                            GlobalStyles.colors.primary700,
+                            GlobalStyles.colors.primary500,
+                          ]}
+                          style={{ flex: 1 }}
                         />
                       ),
-                    })}
-                  />
-                  <BottomTab.Screen
-                    name="MoviesTab"
-                    component={MoviesStackScreen}
-                    options={{
-                      tabBarIcon: ({ color, size }) => (
-                        <MaterialIcons name="movie" color={color} size={size} />
-                      ),
-                      title: "Movies",
-                      tabBarLabel: "Movies",
                     }}
-                  />
+                  >
+                    <BottomTab.Screen
+                      name="HomeTab"
+                      component={HomeStackScreen}
+                      options={({ navigation }) => ({
+                        tabBarIcon: ({ color, size }) => (
+                          <Ionicons name="home" color={color} size={size} />
+                        ),
+                        title: "Home",
+                        tabBarLabel: "Home",
+                        headerRight: ({ tintColor }) => (
+                          <SearchIcon
+                            tintColor={tintColor}
+                            onPress={() => {
+                              navigation.navigate("HomeTab", {
+                                screen: "SearchHome",
+                              });
+                            }}
+                          />
+                        ),
+                      })}
+                    />
+                    <BottomTab.Screen
+                      name="MoviesTab"
+                      component={MoviesStackScreen}
+                      options={{
+                        tabBarIcon: ({ color, size }) => (
+                          <MaterialIcons
+                            name="movie"
+                            color={color}
+                            size={size}
+                          />
+                        ),
+                        title: "Movies",
+                        tabBarLabel: "Movies",
+                      }}
+                    />
 
-                  <BottomTab.Screen
-                    name="ListsTab"
-                    component={ListsStackScreen}
-                    options={{
-                      tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="list" color={color} size={size} />
-                      ),
-                      title: "Lists",
-                      tabBarLabel: "Lists",
-                    }}
-                  />
+                    <BottomTab.Screen
+                      name="ListsTab"
+                      component={ListsStackScreen}
+                      options={{
+                        tabBarIcon: ({ color, size }) => (
+                          <Ionicons name="list" color={color} size={size} />
+                        ),
+                        title: "Lists",
+                        tabBarLabel: "Lists",
+                      }}
+                    />
 
-                  <BottomTab.Screen
-                    name="ProfileTab"
-                    component={ProfileStackScreen}
-                    options={{
-                      tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="person" color={color} size={size} />
-                      ),
-                      title: "Profile",
-                      tabBarLabel: "Profile",
-                    }}
-                  />
-                </BottomTab.Navigator>
-              )}
-            </NavigationContainer>
-          </CustomListsContextProvider>
-        </MoviesContextProvider>
-      </FavoriteMoviesContextProvider>
+                    <BottomTab.Screen
+                      name="ProfileTab"
+                      component={ProfileStackScreen}
+                      options={{
+                        tabBarIcon: ({ color, size }) => (
+                          <Ionicons name="person" color={color} size={size} />
+                        ),
+                        title: "Profile",
+                        tabBarLabel: "Profile",
+                      }}
+                    />
+                  </BottomTab.Navigator>
+                )}
+              </NavigationContainer>
+            </CustomListsContextProvider>
+          </MoviesContextProvider>
+        </FavoriteMoviesContextProvider>
+      </UserDetailsContextProvider>
     </>
   );
 }

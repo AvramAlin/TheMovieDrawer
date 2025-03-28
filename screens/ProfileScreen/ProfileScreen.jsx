@@ -14,9 +14,9 @@ import StatsContainer from "../../components/ProfileComponents/StatsContainer";
 import FavoriteMoviesProfile from "../../components/ProfileComponents/FavoriteMoviesProfile";
 import SectionPressable from "../../components/ProfileComponents/SectionPressable";
 import { FavoriteMoviesContext } from "../../store/favorite-context";
+import { UserDetailsContext } from "../../store/userDetails-context";
 
 export default function ProfileScreen({ navigation }) {
-  const user = FIREBASE_AUTH.currentUser;
   const favoriteMoviesContext = useContext(FavoriteMoviesContext);
 
   function handleNavigateFavorites() {

@@ -1,11 +1,28 @@
-import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
+import React, { useState, useContext } from "react";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
-import { FIREBASE_AUTH } from "../../firebase/firebaseConfig";
+import { Ionicons } from "@expo/vector-icons"; // Make sure you have this package installed
+import { UserDetailsContext } from "../../store/userDetails-context";
+import ProfilePictureSelector from "./ProfilePictureSelector";
+export default function ProfileHeader() {
+  const userDetailsContext = useContext(UserDetailsContext);
+  const [isEditing, setIsEditing] = useState(false);
+  const [newUsername, setNewUsername] = useState("");
 
-export default function ProfileHeader({ username, profileImage }) {
-  const user = FIREBASE_AUTH.currentUser;
+  const handleSaveUsername = () => {
+    userDetailsContext.updateUsername(newUsername);
+    setIsEditing(false);
+  };
+
   return (
     <LinearGradient
       colors={[
@@ -23,11 +40,64 @@ export default function ProfileHeader({ username, profileImage }) {
       >
         <View style={styles.headerContainer}>
           <Image
-            source={require("../../assets/images/profile.jpg")}
+            source={{
+              uri: userDetailsContext.userDetails.profilePicture,
+            }}
             style={styles.profileImage}
           />
+          <ProfilePictureSelector />
           <View style={styles.usernameContainer}>
-            <Text style={styles.textUsername}>{username || user.email}</Text>
+            {isEditing ? (
+              <View style={styles.editContainer}>
+                <TextInput
+                  style={styles.textInput}
+                  value={newUsername}
+                  onChangeText={setNewUsername}
+                  autoFocus
+                  maxLength={20}
+                />
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity
+                    style={styles.iconButton}
+                    onPress={handleSaveUsername}
+                  >
+                    <Ionicons
+                      name="checkmark"
+                      size={24}
+                      color={GlobalStyles.colors.background700}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.iconButton}
+                    onPress={() => {
+                      setNewUsername(userDetailsContext.userDetails.username);
+                      setIsEditing(false);
+                    }}
+                  >
+                    <Ionicons
+                      name="close"
+                      size={24}
+                      color={GlobalStyles.colors.background700}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ) : (
+              <TouchableOpacity
+                style={styles.usernameDisplay}
+                onPress={() => setIsEditing(true)}
+              >
+                <Text style={styles.textUsername}>
+                  {userDetailsContext.userDetails.username}
+                </Text>
+                <Ionicons
+                  name="pencil"
+                  size={18}
+                  color={GlobalStyles.colors.background700}
+                  style={styles.editIcon}
+                />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </ImageBackground>
@@ -51,14 +121,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: GlobalStyles.colors.dark500,
   },
-  profileImagePlaceholder: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: "#000",
-    marginBottom: 10,
-  },
   textUsername: {
     fontSize: 22,
     fontFamily: "dmsans-bold",
@@ -69,5 +131,34 @@ const styles = StyleSheet.create({
     padding: 13,
     marginBottom: 2,
     borderRadius: 20,
+    minWidth: 200,
+  },
+  usernameDisplay: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  editIcon: {
+    marginLeft: 8,
+  },
+  editContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "70%",
+  },
+  textInput: {
+    fontSize: 20,
+    fontFamily: "dmsans-bold",
+    color: GlobalStyles.colors.background700,
+    flex: 1,
+    padding: 0,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    marginLeft: 10,
+  },
+  iconButton: {
+    marginHorizontal: 5,
   },
 });

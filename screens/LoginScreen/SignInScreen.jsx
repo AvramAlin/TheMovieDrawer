@@ -46,7 +46,7 @@ function SignInScreen() {
     setLoading(true);
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      console.log(response);
+      //console.log(response);
     } catch (error) {
       console.log(error);
       alert("Sign In failed : " + error.message);
