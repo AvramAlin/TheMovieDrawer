@@ -37,3 +37,10 @@ yarn-error.*
 
 keys.js
 firebase/
+
+# Firebase
+.firebase/
+firebase-debug.log
+ui-debug.log
+firestore-debug.log
+pubsub-debug.log

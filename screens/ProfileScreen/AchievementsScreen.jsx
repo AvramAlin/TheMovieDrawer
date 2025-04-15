@@ -45,7 +45,7 @@ export default function AchievementsScreen() {
 
   // Polyglot: Watch movies in 5 different languages
   const languages = new Set(finished.map((m) => m.original_language));
-  console.log(languages);
+
   const polyglot = languages.size;
 
   // Old School: Watch 5 movies released before 1980

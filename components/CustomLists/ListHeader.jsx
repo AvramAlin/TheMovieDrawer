@@ -5,7 +5,7 @@ import React from "react";
 import BackButton from "../UI/BackButton";
 import { useNavigation } from "@react-navigation/native";
 
-export default function ListHeader({ currentListData }) {
+export default function ListHeader({ currentListData, onShare }) {
   const navigation = useNavigation();
 
   function handleToggleSearchOnPress() {
@@ -36,7 +36,9 @@ export default function ListHeader({ currentListData }) {
             </Text>
           </View>
           <View style={styles.numberContainer}>
-            <Text style={styles.shareText}>Share</Text>
+            <Pressable onPress={onShare}>
+              <Text style={styles.shareText}>Share</Text>
+            </Pressable>
             <MaterialCommunityIcons
               name="share"
               color={GlobalStyles.colors.dark500}

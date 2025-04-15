@@ -1,0 +1,28 @@
+[debug] [2025-04-15T15:55:30.230Z] ----------------------------------------------------------------------
+[debug] [2025-04-15T15:55:30.236Z] Command:       /usr/local/bin/node /usr/local/bin/firebase init functions
+[debug] [2025-04-15T15:55:30.236Z] CLI Version:   14.1.0
+[debug] [2025-04-15T15:55:30.236Z] Platform:      darwin
+[debug] [2025-04-15T15:55:30.236Z] Node Version:  v20.18.0
+[debug] [2025-04-15T15:55:30.236Z] Time:          Tue Apr 15 2025 18:55:30 GMT+0300 (Eastern European Summer Time)
+[debug] [2025-04-15T15:55:30.237Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-04-15T15:55:30.240Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-04-15T15:55:30.240Z] > authorizing via signed-in user (avramalinmedia@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Users/alinavram/Desktop/proiectele mele/TheMovieDrawer
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
