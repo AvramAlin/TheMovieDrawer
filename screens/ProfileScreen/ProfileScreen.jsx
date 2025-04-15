@@ -23,6 +23,14 @@ export default function ProfileScreen({ navigation }) {
     navigation.navigate("FavoritesScreen");
   }
 
+  function handleNavigateStatistics() {
+    navigation.navigate("Statistics");
+  }
+
+  function handleNavigateAchievements() {
+    navigation.navigate("Achievements");
+  }
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: GlobalStyles.colors.dark500 }}
@@ -36,7 +44,16 @@ export default function ProfileScreen({ navigation }) {
           onFavoriteScreenClick={handleNavigateFavorites}
         />
 
-        <SectionPressable iconName="trophy" textInput="Achievements" />
+        <SectionPressable
+          iconName="stats-chart"
+          textInput="Statistics"
+          onPress={handleNavigateStatistics}
+        />
+        <SectionPressable
+          iconName="trophy"
+          textInput="Achievements"
+          onPress={handleNavigateAchievements}
+        />
         <SectionPressable iconName="settings-sharp" textInput="Settings" />
         <SectionPressable
           iconName="information-circle-outline"

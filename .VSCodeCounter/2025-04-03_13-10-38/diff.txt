@@ -1,0 +1,35 @@
+Date : 2025-04-03 13:10:38
+Directory : /Users/alinavram/Desktop/proiectele mele/TheMovieDrawer
+Total : 5 files,  378 codes, 8 comments, 27 blanks, all 413 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JavaScript     |          3 |        263 |          8 |         20 |        291 |
+| JavaScript JSX |          2 |        115 |          0 |          7 |        122 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                 | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                    |          5 |        378 |          8 |         27 |        413 |
+| . (Files)                                                                                            |          1 |          9 |          0 |          0 |          9 |
+| components                                                                                           |          2 |        254 |          8 |         20 |        282 |
+| components/ProfileComponents                                                                         |          2 |        254 |          8 |         20 |        282 |
+| screens                                                                                              |          2 |        115 |          0 |          7 |        122 |
+| screens/ProfileScreen                                                                                |          2 |        115 |          0 |          7 |        122 |
++------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                                             | language       | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| /Users/alinavram/Desktop/proiectele mele/TheMovieDrawer/App.js                                       | JavaScript     |          9 |          0 |          0 |          9 |
+| /Users/alinavram/Desktop/proiectele mele/TheMovieDrawer/components/ProfileComponents/GenresStat.js   | JavaScript     |        195 |          8 |         17 |        220 |
+| /Users/alinavram/Desktop/proiectele mele/TheMovieDrawer/components/ProfileComponents/SimpleStat.js   | JavaScript     |         59 |          0 |          3 |         62 |
+| /Users/alinavram/Desktop/proiectele mele/TheMovieDrawer/screens/ProfileScreen/AchievementsScreen.jsx | JavaScript JSX |        108 |          0 |          6 |        114 |
+| /Users/alinavram/Desktop/proiectele mele/TheMovieDrawer/screens/ProfileScreen/ProfileScreen.jsx      | JavaScript JSX |          7 |          0 |          1 |          8 |
+| Total                                                                                                |                |        378 |          8 |         27 |        413 |
++------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+

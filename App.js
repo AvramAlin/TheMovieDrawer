@@ -33,6 +33,8 @@ import { FIREBASE_AUTH } from "./firebase/firebaseConfig";
 import FavoriteMoviesContextProvider from "./store/favorite-context";
 import FavoritesScreen from "./screens/ProfileScreen/FavoritesScreen";
 import UserDetailsContextProvider from "./store/userDetails-context";
+import StatisticsScreen from "./screens/ProfileScreen/StatisticsScreen";
+import AchievementsScreen from "./screens/ProfileScreen/AchievementsScreen";
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -227,6 +229,19 @@ function ProfileStackScreen() {
           headerShown: false,
           presentation: "modal",
         }}
+      />
+      <ProfileStack.Screen
+        name="Statistics"
+        component={StatisticsScreen}
+        options={{
+          headerShown: false,
+          presentation: "modal",
+        }}
+      />
+      <ProfileStack.Screen
+        name="Achievements"
+        component={AchievementsScreen}
+        options={{ headerShown: false, presentation: "modal" }}
       />
     </ProfileStack.Navigator>
   );

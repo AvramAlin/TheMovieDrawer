@@ -12,7 +12,7 @@ export default function StatsContainer() {
       <View style={styles.statsContainer}>
         <View style={styles.statBox}>
           <Text style={styles.statNumber}>{moviesWatched}</Text>
-          <Text style={styles.statLabel}>Movies Watched</Text>
+          <Text style={styles.statLabel}>Watched</Text>
         </View>
         <View style={styles.divider} />
         <View style={styles.statBox}>
