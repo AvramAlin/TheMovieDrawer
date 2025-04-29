@@ -171,3 +171,44 @@ export async function getGenres() {
     console.error("Failed to fetch movie genres", error);
   }
 }
+
+// Add these functions to your api/tmdb.js file
+
+export async function getPersonDetails(personId) {
+  try {
+    const response = await axios.get(`${BASE_URL}/person/${personId}`, {
+      params: {
+        api_key: API_KEY,
+        language: "en-US",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error fetching person details:",
+      error.response?.data || error.message
+    );
+    return null;
+  }
+}
+
+export async function getPersonCredits(personId) {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/person/${personId}/movie_credits`,
+      {
+        params: {
+          api_key: API_KEY,
+          language: "en-US",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error fetching person credits:",
+      error.response?.data || error.message
+    );
+    return null;
+  }
+}

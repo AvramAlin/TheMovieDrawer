@@ -1,7 +1,21 @@
-import { StyleSheet, Text, View, FlatList, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 
 export default function CastInfo({ credits }) {
+  const navigation = useNavigation();
+
+  const handleCastPress = (person) => {
+    navigation.navigate("ActorDetails", { personId: person.id });
+  };
+
   return (
     <>
       <Text style={styles.sectionTitle}>Cast:</Text>
@@ -12,7 +26,10 @@ export default function CastInfo({ credits }) {
         renderItem={({ item }) => {
           if (item.profile_path)
             return (
-              <View style={styles.castContainer}>
+              <TouchableOpacity
+                style={styles.castContainer}
+                onPress={() => handleCastPress(item)}
+              >
                 <Image
                   source={{
                     uri: `https://image.tmdb.org/t/p/w185${item.profile_path}`,
@@ -21,7 +38,7 @@ export default function CastInfo({ credits }) {
                 />
                 <Text style={styles.castName}>{item.name}</Text>
                 <Text style={styles.castCharacter}>as {item.character}</Text>
-              </View>
+              </TouchableOpacity>
             );
         }}
       />

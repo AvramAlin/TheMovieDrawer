@@ -35,6 +35,7 @@ import FavoritesScreen from "./screens/ProfileScreen/FavoritesScreen";
 import UserDetailsContextProvider from "./store/userDetails-context";
 import StatisticsScreen from "./screens/ProfileScreen/StatisticsScreen";
 import AchievementsScreen from "./screens/ProfileScreen/AchievementsScreen";
+import ActorDetails from "./components/MoviesComponents/ActorDetails";
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -63,6 +64,11 @@ function HomeStackScreen() {
       <HomeStack.Screen
         name="SearchHome"
         component={SearchScreen}
+        options={{ headerShown: false, presentation: "modal" }}
+      />
+      <HomeStack.Screen
+        name="ActorDetails"
+        component={ActorDetails}
         options={{ headerShown: false, presentation: "modal" }}
       />
     </HomeStack.Navigator>
@@ -180,6 +186,11 @@ function MoviesStackScreen() {
           headerShown: false,
           presentation: "modal",
         }}
+      />
+      <MoviesStack.Screen
+        name="ActorDetails"
+        component={ActorDetails}
+        options={{ headerShown: false, presentation: "modal" }}
       />
     </MoviesStack.Navigator>
   );
@@ -303,7 +314,7 @@ export default function App() {
                         alignSelf: "center",
                         paddingBottom: 5,
                       },
-                      headerTitle: "TheMovieDrawer",
+                      headerTitle: "MovieDrawer",
                       headerBackground: () => (
                         <LinearGradient
                           colors={[
@@ -389,7 +400,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: GlobalStyles.colors.background300,
     alignItems: "center",
     justifyContent: "center",
   },

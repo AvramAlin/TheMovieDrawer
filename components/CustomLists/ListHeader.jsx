@@ -35,17 +35,21 @@ export default function ListHeader({ currentListData, onShare }) {
               {currentListData.movies.length} movies
             </Text>
           </View>
-          <View style={styles.numberContainer}>
-            <Pressable onPress={onShare}>
+
+          <Pressable
+            onPress={onShare}
+            style={({ pressed }) => (pressed ? { opacity: 0.4 } : null)}
+          >
+            <View style={styles.numberContainer}>
               <Text style={styles.shareText}>Share</Text>
-            </Pressable>
-            <MaterialCommunityIcons
-              name="share"
-              color={GlobalStyles.colors.dark500}
-              size={22}
-              style={styles.shareIcon}
-            />
-          </View>
+              <MaterialCommunityIcons
+                name="share"
+                color={GlobalStyles.colors.dark500}
+                size={22}
+                style={styles.shareIcon}
+              />
+            </View>
+          </Pressable>
         </View>
         <Text style={styles.description}>{currentListData.description}</Text>
       </View>
@@ -114,7 +118,7 @@ const styles = StyleSheet.create({
   shareText: {
     fontFamily: "dmsans-light",
     fontSize: 14,
-    marginHorizontal: 10,
+    marginHorizontal: 5,
     margin: 5,
   },
   shareIcon: {
