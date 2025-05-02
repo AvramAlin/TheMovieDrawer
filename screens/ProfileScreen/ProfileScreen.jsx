@@ -31,6 +31,10 @@ export default function ProfileScreen({ navigation }) {
     navigation.navigate("Achievements");
   }
 
+  function handleNavigateFeedback() {
+    navigation.navigate("Feedback");
+  }
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: GlobalStyles.colors.dark500 }}
@@ -54,12 +58,16 @@ export default function ProfileScreen({ navigation }) {
           textInput="Achievements"
           onPress={handleNavigateAchievements}
         />
-        <SectionPressable iconName="settings-sharp" textInput="Settings" />
+        {/* <SectionPressable iconName="settings-sharp" textInput="Settings" /> */}
         <SectionPressable
           iconName="information-circle-outline"
           textInput="About the app"
         />
-        <SectionPressable iconName="mail-outline" textInput="Send feedback" />
+        <SectionPressable
+          iconName="mail-outline"
+          textInput="Send feedback"
+          onPress={handleNavigateFeedback}
+        />
         <SectionPressable
           iconName="log-out"
           textInput="Log out"

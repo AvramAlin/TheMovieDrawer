@@ -36,6 +36,7 @@ import UserDetailsContextProvider from "./store/userDetails-context";
 import StatisticsScreen from "./screens/ProfileScreen/StatisticsScreen";
 import AchievementsScreen from "./screens/ProfileScreen/AchievementsScreen";
 import ActorDetails from "./components/MoviesComponents/ActorDetails";
+import FeedbackScreen from "./components/ProfileComponents/FeedbackScreen";
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -252,6 +253,11 @@ function ProfileStackScreen() {
       <ProfileStack.Screen
         name="Achievements"
         component={AchievementsScreen}
+        options={{ headerShown: false, presentation: "modal" }}
+      />
+      <ProfileStack.Screen
+        name="Feedback"
+        component={FeedbackScreen}
         options={{ headerShown: false, presentation: "modal" }}
       />
     </ProfileStack.Navigator>

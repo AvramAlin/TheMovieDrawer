@@ -89,7 +89,7 @@ function SignInScreen() {
         />
 
         <View style={styles.logoContainer}>
-          <Text style={styles.title}>TheMovieDrawer</Text>
+          <Text style={styles.title}>MovieDrawer</Text>
           <Text style={styles.subtitle}>
             Track and organize your movie journey
           </Text>
