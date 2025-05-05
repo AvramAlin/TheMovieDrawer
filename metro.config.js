@@ -12,5 +12,8 @@ module.exports = (() => {
   // tell Metro that .cjs is a valid *source* file extension
   config.resolver.sourceExts.push("cjs");
 
+  // This is the new line you should add in, after the previous lines
+  config.resolver.unstable_enablePackageExports = false;
+
   return config;
 })();
