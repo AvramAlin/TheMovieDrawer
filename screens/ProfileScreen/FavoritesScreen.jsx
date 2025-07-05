@@ -5,6 +5,7 @@ import BackButton from "../../components/UI/BackButton";
 import NoDataText from "../../components/UI/NoDataText";
 import { FavoriteMoviesContext } from "../../store/favorite-context";
 import FavoriteList from "../../components/ProfileComponents/FavoriteList";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function FavoritesScreen() {
   const favoriteMovies = useContext(FavoriteMoviesContext);
@@ -16,6 +17,12 @@ export default function FavoritesScreen() {
             <BackButton style={styles.buttonBack} />
           )}
           <Text style={styles.title}>Favorite Movies</Text>
+          <Ionicons
+            name="star-outline"
+            size={27}
+            color={GlobalStyles.colors.background500}
+            style={styles.iconStyle}
+          />
         </View>
       </View>
       {favoriteMovies.favoriteMovies &&
@@ -59,5 +66,8 @@ const styles = StyleSheet.create({
   buttonBack: {
     marginTop: "-1%",
     marginLeft: "-4%",
+  },
+  iconStyle: {
+    marginTop: "4.5%",
   },
 });
