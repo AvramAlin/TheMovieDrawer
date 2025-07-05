@@ -12,6 +12,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
+import BackButton from "../UI/BackButton";
 
 export default function FeedbackScreen({ navigation }) {
   const [message, setMessage] = useState("");
@@ -51,6 +52,9 @@ export default function FeedbackScreen({ navigation }) {
         keyboardVerticalOffset={80} // adjust if you have a header
       >
         <View style={styles.body}>
+          {Platform.OS === "android" && (
+            <BackButton style={styles.buttonBack} />
+          )}
           <Text style={styles.title}>Send Feedback</Text>
           <TextInput
             style={styles.input}
@@ -84,6 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: GlobalStyles.colors.background500,
     marginBottom: 12,
+    marginLeft: Platform.OS === "android" && "11%",
   },
   input: {
     flex: 1,
@@ -110,5 +115,9 @@ const styles = StyleSheet.create({
     fontFamily: "dmsans-bold",
     color: GlobalStyles.colors.background500,
     fontSize: 16,
+  },
+  buttonBack: {
+    marginTop: "-10%",
+    marginLeft: "-4%",
   },
 });

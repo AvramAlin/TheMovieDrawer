@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { MoviesContext } from "../../store/movies-context";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import AchievementCircle from "../../components/ProfileComponents/AchievementCircle";
+import BackButton from "../../components/UI/BackButton";
 
 export default function AchievementsScreen() {
   const moviesContext = useContext(MoviesContext);
@@ -191,13 +192,7 @@ export default function AchievementsScreen() {
       <View style={styles.listHeader}>
         <View style={styles.rowContainer}>
           {Platform.OS === "android" && (
-            <Ionicons
-              name="arrow-back"
-              size={24}
-              color={GlobalStyles.colors.background500}
-              style={{ marginRight: 10 }}
-              // onPress={...} // Add navigation back if needed
-            />
+            <BackButton style={styles.buttonBack} />
           )}
           <Text style={styles.title}>Achievements</Text>
           <Ionicons
@@ -276,5 +271,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginBottom: 16,
+  },
+  buttonBack: {
+    marginTop: "-10%",
+    marginLeft: "-4%",
   },
 });

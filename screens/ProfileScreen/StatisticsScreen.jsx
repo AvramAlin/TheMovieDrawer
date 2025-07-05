@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { MoviesContext } from "../../store/movies-context";
 import SimpleStat from "../../components/ProfileComponents/SimpleStat";
 import GenresStat from "../../components/ProfileComponents/GenresStat";
+import BackButton from "../../components/UI/BackButton";
 
 export default function StatisticsScreen() {
   const moviesContext = useContext(MoviesContext);
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonBack: {
-    marginTop: "-1%",
+    marginTop: "-10%",
     marginLeft: "-4%",
   },
 });

@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 

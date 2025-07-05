@@ -2,8 +2,6 @@ import { StyleSheet, Text, View, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { GlobalStyles } from "../../assets/colors/GlobalStyles";
 
-import React from "react";
-
 export default function SectionPressable({ iconName, textInput, onPress }) {
   return (
     <Pressable

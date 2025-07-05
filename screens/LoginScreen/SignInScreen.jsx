@@ -51,7 +51,7 @@ function SignInScreen() {
       console.log(error);
       alert("Sign In failed : " + error.message);
     } finally {
-      setEmail("");
+      //setEmail("");
       setPassword("");
       setLoading(false);
     }
