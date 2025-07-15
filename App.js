@@ -37,6 +37,7 @@ import StatisticsScreen from "./screens/ProfileScreen/StatisticsScreen";
 import AchievementsScreen from "./screens/ProfileScreen/AchievementsScreen";
 import ActorDetails from "./components/MoviesComponents/ActorDetails";
 import FeedbackScreen from "./components/ProfileComponents/FeedbackScreen";
+import "react-native-get-random-values";
 
 const BottomTab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();

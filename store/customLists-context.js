@@ -3,6 +3,7 @@ import React, { createContext, useState } from "react";
 import { doc, updateDoc, getDoc } from "firebase/firestore";
 import { FIREBASE_AUTH, FIRESTORE_DATABASE } from "../firebase/firebaseConfig";
 import { useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export const CustomListsContext = createContext({
   customLists: [],
@@ -65,11 +66,12 @@ function CustomListsContextProvider({ children }) {
 
   function addCustomList(title, description, movies = []) {
     setCustomLists((prev) => {
-      const newId =
-        prev.length > 0 ? Math.max(...prev.map((list) => list.id)) + 1 : 1;
+      // Generăm un ID unic de tip string UUID
+      const newId = uuidv4();
       const newList = { id: newId, title, description, movies };
       const updatedLists = [...prev, newList];
-      // Update Firestore with the new customLists array
+
+      // Salvăm în Firestore
       updateFirestoreCustomLists(updatedLists);
       return updatedLists;
     });

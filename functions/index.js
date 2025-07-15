@@ -8,24 +8,24 @@ exports.getSharedList = functions.https.onRequest(async (req, res) => {
   res.set("Access-Control-Allow-Origin", "*");
 
   try {
-    const listId = parseInt(req.query.listId);
+    const listId = req.query.listId;
     const userId = req.query.userId;
 
     if (!listId || !userId) {
       return res
-          .status(400)
-          .json({error: "Missing listId or userId parameter"});
+        .status(400)
+        .json({ error: "Missing listId or userId parameter" });
     }
 
     // Get the user document
     const userDoc = await admin
-        .firestore()
-        .collection("users")
-        .doc(userId)
-        .get();
+      .firestore()
+      .collection("users")
+      .doc(userId)
+      .get();
 
     if (!userDoc.exists) {
-      return res.status(404).json({error: "User not found"});
+      return res.status(404).json({ error: "User not found" });
     }
 
     const userData = userDoc.data();
@@ -39,13 +39,13 @@ exports.getSharedList = functions.https.onRequest(async (req, res) => {
     };
 
     if (!requestedList) {
-      return res.status(404).json({error: "List not found"});
+      return res.status(404).json({ error: "List not found" });
     }
 
     // Return the list data
     return res.json(requestedList);
   } catch (error) {
     console.error("Error retrieving shared list:", error);
-    return res.status(500).json({error: "Server error"});
+    return res.status(500).json({ error: "Server error" });
   }
 });
